@@ -1,9 +1,9 @@
 chbspasswd
 ==========
 
-A password generator inspired by XKCD 936: Password Strength and xkpasswd.pm by Bart Busschots.
+A password generator inspired by XKCD 936: Password Strength
 
-Copyright (C) 2013 Charles H. Leggett
+Copyright (C) 2013-2014, Charles H. Leggett
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
