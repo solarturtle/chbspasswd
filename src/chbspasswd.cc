@@ -21,5 +21,12 @@
 
 int main()
 {
-      std::cout << "CorrectHorseBatteryStaple\n";
+  std::string password;
+
+  password = "CorrectHorseBatteryStaple";
+
+  std::cout << password;
+  std::cout << std::endl;
+
+  return 0;
 }
