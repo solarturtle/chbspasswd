@@ -1,7 +1,8 @@
 chbspasswd
 ==========
 
-A password generator inspired by XKCD 936: Password Strength
+A password generator inspired by XKCD 936: Password Strength and 
+xkpasswd by Bart Busschots
 
 Copyright (C) 2013-2014, Charles H. Leggett
 
