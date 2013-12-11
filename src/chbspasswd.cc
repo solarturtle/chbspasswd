@@ -18,9 +18,57 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
+#include <GetOpt.h>
 
-int main()
-{
+int chbs();
+
+int main(int argc, char **argv) {
+
+  int flag;
+  while ((flag = getopt(argc, argv, "a:b:c:e:h:i:l:m:o:n:p:s:u:v:w:x")) != EOF) {
+    switch (flag) {
+      case 'a':
+        break;
+      case 'b':
+        break;
+      case 'c':
+        break;
+      case 'e':
+        break;
+      case 'h':
+        break;
+      case 'i':
+        break;
+      case 'l':
+        break;
+      case 'm':
+        break;
+      case 'n':
+        break;
+      case 'o':
+        break;
+      case 'p':
+        break;
+      case 's':
+        break;
+      case 'u':
+        break;
+      case 'v':
+        break;
+      case 'w':
+        break;
+      case 'x':
+        chbs();
+        break;
+      case '?':
+        break;
+    }
+  }
+
+  return 0;
+}
+
+int chbs() {
   std::string password;
 
   password = "CorrectHorseBatteryStaple";
