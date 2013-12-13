@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
         thisPassword.setWordCount();
         break;
       case 'x':
-        // xkcd - Override all other options and return a well known password that you already have memorized. ;-)
+        // xkcd - Override all other options and return a well known password that you have already memorized. ;-)
         showChbs();
         break;
       case '?':
