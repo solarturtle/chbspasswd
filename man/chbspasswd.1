@@ -26,9 +26,9 @@
 .\" Process this file with
 .\" groff -man -Tascii chbspasswd.1
 .\"
-.TH CHBSPASSWD 1 "2013-12-10" chbspasswd "User Manual"
+.TH CHBSPASSWD 1 "2013-12-13" chbspasswd "User Manual"
 .SH NAME
-chbspasswd \- generate a password which is easy to remember and hard to guess
+chbspasswd \- generates a password which is easy to remember and hard to guess
 .SH SYNOPSIS
 .B chbspasswd [Options] [ -o
 .I output-file
@@ -37,10 +37,9 @@ chbspasswd \- generate a password which is easy to remember and hard to guess
 .B chbspasswd
 is a password generator inspired by XKCD 936: Password Strength and xkpasswd.net. It can generate a customized password that is easy to remember and hard to guess.
 .SH OPTIONS
-.IP -c
-Number (or count) of passwords to generate.
-.IP "-o output-file"
-Filename to write passwords to instead of to standard out.
+.IP -x
+Override all other options and return a well known password that you have already memorized.
+.B ;-)
 .SH FILES
 .I ~/.chbspasswdrc
 .RS
