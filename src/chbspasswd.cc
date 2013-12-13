@@ -18,30 +18,67 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
+#include <string>
 #include <GetOpt.h>
+
+class CHBSPassword {
+
+  public:
+    std::string getPassword();
+    void setWordCount();
+    void setWordLength();
+    void setWordCase();
+    void setSeperator();
+    void setBefore();
+    void setAfter();
+    void setInside();
+    void enableEleet();
+
+  private:
+    std::string validSpecialCharacters;
+    std::string validSeperators;
+
+    bool        seperatorEnabled;
+    std::string seperator;
+
+    bool        beforeEnabled;
+    std::string before;
+
+    bool        afterEnabled;
+    std::string after;
+
+    bool        insideEnabled;
+    std::string inside;
+};
 
 int showHelp();
 int showVersion();
-int chbs();
+int showChbs();
 
 int main(int argc, char **argv) {
 
   int flag;
+
+  CHBSPassword thisPassword;
 
   while ((flag = getopt(argc, argv, "a:b:c:e:hi:l:n:s:u:vw:x")) != EOF) {
     switch (flag) {
       case 'a':
         // after - Add string of digits, special characters, or a combination to the end of the password.
         std::cout << optarg << std::endl;
+        thisPassword.setAfter();
         break;
       case 'b':
         // before - Add string of digits, special characters, or a combination to the beginning of the password.
+        thisPassword.setBefore();
         break;
       case 'c':
         // case - Modify the words to be upper, lower, initial, or mixed case 
+        thisPassword.setWordCase();
         break;
       case 'e':
         // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
+        thisPassword.enableEleet();
         break;
       case 'h':
         // help - Display a message with usage information 
@@ -49,15 +86,18 @@ int main(int argc, char **argv) {
         break;
       case 'i':
         // inside - Add string of digits, special characters, or a combination between the words inside the password.
+        thisPassword.setInside();
         break;
       case 'l':
         // length - Set minimum and maximum word length.
+        thisPassword.setWordLength();
         break;
       case 'n':
         // number - Set number of passwords to create.
         break;
       case 's':
         // seperator - Set the preferences and count of seperator characters between words and other strings.
+        thisPassword.setSeperator();
         break;
       case 'u':
         // use - Specify a configuration file to use instead of the default .chbspasswdrc
@@ -68,10 +108,11 @@ int main(int argc, char **argv) {
         break;
       case 'w':
         // words - Set the number of words to use.
+        thisPassword.setWordCount();
         break;
       case 'x':
         // xkcd - Override all other options and return a well known password that you already have memorized. ;-)
-        chbs();
+        showChbs();
         break;
       case '?':
         break;
@@ -95,7 +136,7 @@ int showVersion() {
   return 0;
 }
 
-int chbs() {
+int showChbs() {
 
   std::cout << "CorrectHorseBatteryStaple" << std::endl;
 
