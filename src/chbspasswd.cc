@@ -24,6 +24,7 @@
 class CHBSPassword {
 
   public:
+    CHBSPassword();
     std::string getPassword();
     void setWordCount();
     void setWordLength();
@@ -120,6 +121,47 @@ int main(int argc, char **argv) {
   }
 
   return 0;
+}
+
+CHBSPassword::CHBSPassword() {
+
+}
+
+std::string CHBSPassword::getPassword(){
+  std::string password;
+  return password;
+}
+
+void CHBSPassword::setWordCount(){
+
+}
+
+void CHBSPassword::setWordLength(){
+
+}
+
+void CHBSPassword::setWordCase(){
+
+}
+
+void CHBSPassword::setSeperator(){
+
+}
+
+void CHBSPassword::setBefore(){
+
+}
+
+void CHBSPassword::setAfter(){
+
+}
+
+void CHBSPassword::setInside(){
+
+}
+
+void CHBSPassword::enableEleet(){
+
 }
 
 int showHelp() {
