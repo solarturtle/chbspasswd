@@ -22,3 +22,4 @@ config.status
 
 # I am not sure which part of the build process this came from ...
 src/.deps/chbspasswd.Po
+src/.deps/chbspasswd.Tpo
