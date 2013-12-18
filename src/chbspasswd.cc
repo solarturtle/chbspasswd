@@ -29,22 +29,21 @@ class CHBSPassword {
 
     CHBSPassword();
     
-    std::string getPassword();
-
-    static bool  isValidPadType ( std::string );
-    static bool  isValidPadCount ( std::string );
-    bool         eleetEnabled;
+    std::string  getPassword();
 
     std::string  validSpecialCharacters;
     std::string  validSeparators;
 
     std::string  getWord();
     int          wordCount;
-    int          wordMinLength;
-    int          wordMaxLength;
-    std::string  wordCase();
+    int          wordMinimumLength;
+    int          wordMaximumLength;
+
+    std::string  wordCase;
 
     std::string  getSeparator();
+    std::string  separatorType;
+    int          separatorCount;
 
     std::string  getPadString ( std::string, std::string );
     int          padMaxLength;
@@ -61,6 +60,11 @@ class CHBSPassword {
     std::string  insideType;
     int          insideCount;
 
+    bool         eleetEnabled;
+
+    static bool  isValidPadType ( std::string );
+    static bool  isValidPadCount ( int );
+    
 };
 
 int showHelp();
@@ -71,6 +75,7 @@ std::vector<std::string> tokenize ( std::string, char );
 
 int main(int argc, char **argv) {
 
+  int passwordCount;
   CHBSPassword thisPassword;
 
   int flag;
@@ -92,6 +97,7 @@ int main(int argc, char **argv) {
     }
 
     else if ( flag == 'b' ) {
+
       // before - Add string of digits, special characters, or a combination to the beginning of the password.
 
       arguments = tokenize ( optarg, ',' );
@@ -100,26 +106,43 @@ int main(int argc, char **argv) {
       thisPassword.beforeCount = atoi(arguments[1].c_str());
 
       return 0;
+
     }
 
     else if ( flag == 'c' ) {
+
       // case - Modify the words to be upper, lower, initial, or mixed case 
+
+      std::string caseType = optarg;
+
+      thisPassword.wordCase = caseType;
+
       return 0;
+
     }
     
     else if ( flag == 'e' ) {
+
       // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
+
       thisPassword.eleetEnabled = true;
+
       return 0;
+
     }
 
     else if ( flag == 'h' ) {
+
       // help - Display a message with usage information 
+
       showHelp();
+
       return 0;
+
     }
 
     else if ( flag == 'i' ) {
+
       // inside - Add string of digits, special characters, or a combination between the words inside the password.
 
       arguments = tokenize ( optarg, ',' );
@@ -128,47 +151,89 @@ int main(int argc, char **argv) {
       thisPassword.insideCount = atoi(arguments[1].c_str());
 
       return 0;
+
     }
 
     else if ( flag == 'l' ) {
+
       // length - Set minimum and maximum word length.
+
+      arguments = tokenize ( optarg, ',' );
+
+      thisPassword.wordMinimumLength = atoi(arguments[0].c_str());
+      thisPassword.wordMinimumLength = atoi(arguments[1].c_str());
+
       return 0;
+
     }
 
     else if ( flag == 'n' ) {
+
       // number - Set number of passwords to create.
+
+      std::string count = optarg;
+
+      passwordCount = atoi(count.c_str());
+
       return 0;
+
     }
 
     else if ( flag == 's' ) {
+
       // seperator - Set the preferences and count of seperator characters between words and other strings.
+
+      arguments = tokenize ( optarg, ',' );
+
+      thisPassword.separatorType = arguments[0];
+      thisPassword.separatorCount = atoi(arguments[1].c_str());
+
       return 0;
+
     }
 
     else if ( flag == 'u' ) {
+
       // use - Specify a configuration file to use instead of the default .chbspasswdrc
+
       return 0;
+
     }
 
     else if ( flag == 'v' ) {
+
       // version - Display a message with version information 
+
       showVersion();
+
       return 0;
+
     }
 
     else if ( flag == 'w' ) {
+
       // words - Set the number of words to use.
+
+      std::string count = optarg;
+
+      thisPassword.wordCount = atoi(count.c_str());
+
       return 0;
     }
 
     else if ( flag == 'x' ) {
+
       // xkcd - Override all other options and return a well known password that you have already memorized. ;-)
+
       showCHBS();
+
       return 0;
+
     }
 
   }
 
+  thisPassword.getPassword();
 }
 
 CHBSPassword::CHBSPassword() {
@@ -181,7 +246,9 @@ CHBSPassword::CHBSPassword() {
 }
 
 std::string CHBSPassword::getPassword(){
+
   // Build and return password based on the defaults in the configuration file and modifying switches.
+
 }
 
 static bool isValidPadType ( std::string padType ) {
@@ -229,29 +296,34 @@ bool isValidPadCount ( int padCount, int padMaxLength ) {
 }
 
 std::string CHBSPassword::getBeforeString() {
+
   // Return string for ...
   // before - Add string of digits, special characters, or a combination to the beginning of the password.
   
 }
 
 std::string CHBSPassword::getAfterString() {
+
   // Return string for ...
   // after - Add string of digits, special characters, or a combination to the end of the password.
 
 }
 
 std::string CHBSPassword::getInsideString() {
+
   // Return string for ...
   // inside - Add string of digits, special characters, or a combination between the words inside the password.
 
 }
 
 std::string CHBSPassword::getPadString ( std::string padType, std::string count ){
+
   // Called by get{Before,After,Inside} to use variables to build and return string.
   
 }
 
 int showHelp() {
+
   // help - Display a message with usage information 
 
   std::cout << std::endl;
@@ -266,34 +338,45 @@ int showHelp() {
   std::cout << std::endl;
 
   return 0;
+  
 }
 
 int showVersion() {
+
   // version - Display a message with version information 
 
   std::cout << "chbspasswd v0.1" << std::endl;
 
   return 0;
+
 }
 
 int showCHBS() {
+
   // xkcd - Override all other options and return a well known password that you have already memorized. ;-)
 
   std::cout << "CorrectHorseBatteryStaple" << std::endl;
 
   return 0;
+
 }
 
 std::vector<std::string> tokenize(std::string delimiterSeparatedString, char delimiter) {
-  
-  std::vector<std::string> tokens;
-    
-  std::istringstream iss(delimiterSeparatedString);
-  std::string token;
 
+  // Accepts a delimiter separated string and the specified delimiter.
+  
+  std::istringstream iss(delimiterSeparatedString);
+
+  // Tokenizes the string and puts the tokens into a vector
+  
+  std::string token;
+  std::vector<std::string> tokens;
+  
   while (std::getline(iss, token, delimiter)) {
     tokens.push_back(token);
   }
+
+  // Returns the vector.
 
   return tokens;
 
