@@ -292,7 +292,16 @@ std::string CHBSPassword::getPadString ( std::string padType, std::string count 
 int showHelp() {
   // help - Display a message with usage information 
 
-  std::cout << "Here is a helpful message." << std::endl;
+  std::cout << std::endl;
+  std::cout << "Usage: chbspasswd [ -w numberOfWords ]" << std::endl;
+  std::cout << "                  [ -l minimumWordLength,maximumWordLength ]" << std::endl;
+  std::cout << "                  [ -c {UPPER|LOWER|INITIAL|MIXED} ]" << std::endl;
+  std::cout << "                  [ -s typeOfSeparator,count ]" << std::endl;
+  std::cout << "                  [ -{a|b|c} {DIGITS|SPECIAL|MIXED},count ]" << std::endl;
+  std::cout << "                  [ -n numberOfPasswordsToGenerate ]" << std::endl;
+  std::cout << std::endl;
+  std::cout << "For more detailed information: man chbspasswd" << std::endl;
+  std::cout << std::endl;
 
   return 0;
 }
