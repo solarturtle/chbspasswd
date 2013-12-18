@@ -26,22 +26,15 @@
 class CHBSPassword {
 
   public:
+
     CHBSPassword();
     
     std::string getPassword();
 
-    void         setWordCount();
-    void         setWordLength();
-    void         setWordCase();
-    void         setSeparator();
-    bool         validatePadType ( std::string );
-    bool         validatePadCount ( std::string );
-    void         setBefore ( std::string, std::string );
-    void         setAfter ( std::string, std::string );
-    void         setInside ( std::string, std::string );
-    void         enableEleet();
+    static bool  isValidPadType ( std::string );
+    static bool  isValidPadCount ( std::string );
+    bool         eleetEnabled;
 
-  private:
     std::string  validSpecialCharacters;
     std::string  validSeparators;
 
@@ -72,9 +65,9 @@ class CHBSPassword {
 
 int showHelp();
 int showVersion();
-int showChbs();
+int showCHBS();
 
-std::vector<std::string> tokenize(std::string, char);
+std::vector<std::string> tokenize ( std::string, char );
 
 int main(int argc, char **argv) {
 
@@ -84,69 +77,99 @@ int main(int argc, char **argv) {
   std::vector<std::string> arguments;
 
   while ((flag = getopt(argc, argv, "a:b:c:e:hi:l:n:s:u:vw:x")) != EOF) {
+
     if ( flag == 'a' ) {
+
       // after - Add string of digits, special characters, or a combination to the end of the password.
-      arguments = tokenize(optarg, ',');
-//      if ( thisPassword.validatePadType (arguments[0]) ) {
-//        std::cout << "HERE" << std::endl; // debug message
-//      }
+
+      arguments = tokenize ( optarg, ',' );
+
+      thisPassword.afterType = arguments[0];
+      thisPassword.afterCount = atoi(arguments[1].c_str());
+
+      return 0;
+
     }
+
     else if ( flag == 'b' ) {
       // before - Add string of digits, special characters, or a combination to the beginning of the password.
-      arguments = tokenize(optarg, ',');
-      thisPassword.setBefore ( arguments[0], arguments[1] );
+
+      arguments = tokenize ( optarg, ',' );
+
+      thisPassword.beforeType = arguments[0];
+      thisPassword.beforeCount = atoi(arguments[1].c_str());
+
+      return 0;
     }
+
     else if ( flag == 'c' ) {
       // case - Modify the words to be upper, lower, initial, or mixed case 
-      thisPassword.setWordCase();
+      return 0;
     }
+    
     else if ( flag == 'e' ) {
       // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
-      thisPassword.enableEleet();
+      thisPassword.eleetEnabled = true;
+      return 0;
     }
+
     else if ( flag == 'h' ) {
       // help - Display a message with usage information 
       showHelp();
       return 0;
     }
+
     else if ( flag == 'i' ) {
       // inside - Add string of digits, special characters, or a combination between the words inside the password.
-      arguments = tokenize(optarg, ',');
-      thisPassword.setInside ( arguments[0], arguments[1] );
+
+      arguments = tokenize ( optarg, ',' );
+
+      thisPassword.insideType = arguments[0];
+      thisPassword.insideCount = atoi(arguments[1].c_str());
+
+      return 0;
     }
+
     else if ( flag == 'l' ) {
       // length - Set minimum and maximum word length.
-      thisPassword.setWordLength();
+      return 0;
     }
+
     else if ( flag == 'n' ) {
       // number - Set number of passwords to create.
+      return 0;
     }
+
     else if ( flag == 's' ) {
       // seperator - Set the preferences and count of seperator characters between words and other strings.
-      thisPassword.setSeparator();
+      return 0;
     }
+
     else if ( flag == 'u' ) {
       // use - Specify a configuration file to use instead of the default .chbspasswdrc
+      return 0;
     }
+
     else if ( flag == 'v' ) {
       // version - Display a message with version information 
       showVersion();
       return 0;
     }
+
     else if ( flag == 'w' ) {
       // words - Set the number of words to use.
-      thisPassword.setWordCount();
-    }
-    else if ( flag == 'x' ) {
-      // xkcd - Override all other options and return a well known password that you have already memorized. ;-)
-      showChbs();
       return 0;
     }
-  }
-}
 
-/////////////////////////////////////////////////////////////////////////////////
-// BEGIN CHBSPassword Public
+    else if ( flag == 'x' ) {
+      // xkcd - Override all other options and return a well known password that you have already memorized. ;-)
+      showCHBS();
+      return 0;
+    }
+
+  }
+
+}
 
 CHBSPassword::CHBSPassword() {
 
@@ -161,47 +184,23 @@ std::string CHBSPassword::getPassword(){
   // Build and return password based on the defaults in the configuration file and modifying switches.
 }
 
-void CHBSPassword::setWordCount(){
-  // Set variables for ...
-  // words - Set the number of words to use.
+static bool isValidPadType ( std::string padType ) {
 
-}
+  //std::transform(padType.begin(), padType.end(), padType.begin(), ::tolower);
 
-void CHBSPassword::setWordLength(){
-  // Set variables for ...
-  // length - Set minimum and maximum word length.
-
-}
-
-void CHBSPassword::setWordCase(){
-  // Set variables for ...
-  // case - Modify the words to be upper, lower, initial, or mixed case 
-
-}
-
-void CHBSPassword::setSeparator(){
-  // Set variables for ...
-  // seperator - Set the preferences and count of seperator characters between words and other strings.
-
-}
-
-bool validatePadType ( std::string padType ) {
-
-  std::transform(padType.begin(), padType.end(), padType.begin(), ::tolower);
-
-  if ( padType == "d" ) {
+  if ( padType == "d" || padType == "digits") {
     // Using Pad of Digits
     std::cout << "DIGITS" << std::endl; // debug message
     
-    return true;
+    return 1;
   }
-  else if ( padType == "s" ) {
+  else if ( padType == "s" || padType == "special") {
     // Using Pad of Special Characters
     std::cout << "SPECIAL" << std::endl; // debug message
     
     return true;
   }
-  else if ( padType == "m" ) {
+  else if ( padType == "m" || padType == "mixed") {
     // Using Pad of Mixed Digits and Special Characters
     std::cout << "MIXED" << std::endl; // debug message
     
@@ -218,7 +217,7 @@ bool validatePadType ( std::string padType ) {
   std::cout << "HERE" << std::endl; // debug message
 }
 
-bool validatePadCount ( int padCount, int padMaxLength ) {
+bool isValidPadCount ( int padCount, int padMaxLength ) {
 
   if ( padCount <= padMaxLength ) {
     return true;
@@ -228,37 +227,6 @@ bool validatePadCount ( int padCount, int padMaxLength ) {
   }
 
 }
-
-void CHBSPassword::setBefore ( std::string beforeType, std::string beforeCount) {
-  // Set variables for ...
-  // before - Add string of digits, special characters, or a combination to the beginning of the password.
-
-
-}
-
-void CHBSPassword::setAfter ( std::string afterType, std::string afterCount ) {
-  // Set variables for ...
-  // after - Add string of digits, special characters, or a combination to the end of the password.
-
-}
-
-void CHBSPassword::setInside ( std::string insideType, std::string insideCount) {
-  // Set variables for ...
-  // inside - Add string of digits, special characters, or a combination between the words inside the password.
-
-}
-
-void CHBSPassword::enableEleet(){
-  // Set variables for ...
-  // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
-
-}
-
-// END CHBSPassword Public
-/////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////
-// BEGIN CHBSPassword Private
 
 std::string CHBSPassword::getBeforeString() {
   // Return string for ...
@@ -282,12 +250,6 @@ std::string CHBSPassword::getPadString ( std::string padType, std::string count 
   // Called by get{Before,After,Inside} to use variables to build and return string.
   
 }
-
-// END CHBSPassword Private
-/////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////
-// BEGIN Main Functions
 
 int showHelp() {
   // help - Display a message with usage information 
@@ -314,7 +276,7 @@ int showVersion() {
   return 0;
 }
 
-int showChbs() {
+int showCHBS() {
   // xkcd - Override all other options and return a well known password that you have already memorized. ;-)
 
   std::cout << "CorrectHorseBatteryStaple" << std::endl;
@@ -336,7 +298,4 @@ std::vector<std::string> tokenize(std::string delimiterSeparatedString, char del
   return tokens;
 
 };
-
-// END Main Functions
-/////////////////////////////////////////////////////////////////////////////////
 
