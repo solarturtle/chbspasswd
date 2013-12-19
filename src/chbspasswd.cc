@@ -57,16 +57,19 @@ class CHBSPassword {
     static bool         isValidPadCount ( int, int, int );
 
     std::string  getBefore();
+    bool         beforeEnabled;
     std::string  beforeType;
     int          beforeCount;
 
-    std::string  getAfter();
-    std::string  afterType;
-    int          afterCount;
-
     std::string  getInside();
+    bool         insideEnabled;
     std::string  insideType;
     int          insideCount;
+
+    std::string  getAfter();
+    bool         afterEnabled;
+    std::string  afterType;
+    int          afterCount;
 
     bool         eleetEnabled;
 
@@ -227,10 +230,13 @@ int main(int argc, char **argv) {
   }
 
   if ( DEBUG ) {
+    std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; // debug message
     std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
     std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; // debug message
+    std::cout << "insideEnabled: " << thisPassword.insideEnabled << std::endl; // debug message
     std::cout << "insideType: " << thisPassword.insideType << std::endl; // debug message
     std::cout << "insideCount: " << thisPassword.insideCount << std::endl; // debug message
+    std::cout << "afterEnabled: " << thisPassword.afterEnabled << std::endl; // debug message
     std::cout << "afterType: " << thisPassword.afterType << std::endl; // debug message
     std::cout << "afterCount: " << thisPassword.afterCount << std::endl; // debug message
   }
@@ -258,14 +264,17 @@ CHBSPassword::CHBSPassword() {
   padMinimumLength = 1;
   padMaximumLength = 10;
 
+  beforeEnabled = true;
   beforeType = "DIGITS";
   beforeCount = 1;
 
-  afterType = "SPECIAL";
-  afterCount = 1;
-
+  insideEnabled = false;
   insideType = "NONE";
   insideCount = 0;
+
+  afterEnabled = true;
+  afterType = "SPECIAL";
+  afterCount = 1;
 
   eleetEnabled = false;
 
@@ -323,18 +332,21 @@ int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, 
     // Assign correct class variables based on padPosition.
     if ( padPosition == "before" ) {
 
+      thisPassword.beforeEnabled = true;
       thisPassword.beforeType = type;
       thisPassword.beforeCount = Count;
 
     }
     else if ( padPosition == "inside" ) {
 
+      thisPassword.insideEnabled = true;
       thisPassword.insideType = type;
       thisPassword.insideCount = Count;
 
     }
     else if ( padPosition == "after" ) {
 
+      thisPassword.afterEnabled = true;
       thisPassword.afterType = type;
       thisPassword.afterCount = Count;
 
