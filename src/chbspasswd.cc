@@ -42,11 +42,19 @@ class CHBSPassword {
     std::string  wordCase;
 
     std::string  getSeparator();
+    bool         separatorEnabled;
     std::string  separatorType;
     int          separatorCount;
 
-    std::string  getPadString ( std::string, std::string );
-    int          padMaxLength;
+    std::string  getPad ( std::string, std::string );
+    int          setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount);
+    int          padMinimumLength;
+    int          padMaximumLength;
+
+    static std::string  convertPadType ( std::string );
+    static int          convertPadCount ( std::string );
+    static bool         isValidPadType ( std::string );
+    static bool         isValidPadCount ( int, int, int );
 
     std::string  getBeforeString();
     std::string  beforeType;
@@ -62,9 +70,6 @@ class CHBSPassword {
 
     bool         eleetEnabled;
 
-    static bool  isValidPadType ( std::string );
-    static bool  isValidPadCount ( int );
-    
 };
 
 int showHelp();
@@ -74,6 +79,8 @@ int showCHBS();
 std::vector<std::string> tokenize ( std::string, char );
 
 int main(int argc, char **argv) {
+
+  bool DEBUG = true;
 
   int passwordCount;
   CHBSPassword thisPassword;
@@ -87,12 +94,11 @@ int main(int argc, char **argv) {
 
       // after - Add string of digits, special characters, or a combination to the end of the password.
 
+      // Split command line arguments on comma delimiter.
       arguments = tokenize ( optarg, ',' );
 
-      thisPassword.afterType = arguments[0];
-      thisPassword.afterCount = atoi(arguments[1].c_str());
-
-      return 0;
+      // Set pad variables
+      thisPassword.setPad ( thisPassword, "after", arguments[0], arguments[1] );
 
     }
 
@@ -100,12 +106,11 @@ int main(int argc, char **argv) {
 
       // before - Add string of digits, special characters, or a combination to the beginning of the password.
 
+      // Split command line arguments on comma delimiter.
       arguments = tokenize ( optarg, ',' );
 
-      thisPassword.beforeType = arguments[0];
-      thisPassword.beforeCount = atoi(arguments[1].c_str());
-
-      return 0;
+      // Set pad variables
+      thisPassword.setPad ( thisPassword, "before", arguments[0], arguments[1] );
 
     }
 
@@ -117,8 +122,6 @@ int main(int argc, char **argv) {
 
       thisPassword.wordCase = caseType;
 
-      return 0;
-
     }
     
     else if ( flag == 'e' ) {
@@ -126,8 +129,6 @@ int main(int argc, char **argv) {
       // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
 
       thisPassword.eleetEnabled = true;
-
-      return 0;
 
     }
 
@@ -145,12 +146,12 @@ int main(int argc, char **argv) {
 
       // inside - Add string of digits, special characters, or a combination between the words inside the password.
 
+
+      // Split command line arguments on comma delimiter.
       arguments = tokenize ( optarg, ',' );
 
-      thisPassword.insideType = arguments[0];
-      thisPassword.insideCount = atoi(arguments[1].c_str());
-
-      return 0;
+      // Set pad variables
+      thisPassword.setPad ( thisPassword, "inside", arguments[0], arguments[1] );
 
     }
 
@@ -163,8 +164,6 @@ int main(int argc, char **argv) {
       thisPassword.wordMinimumLength = atoi(arguments[0].c_str());
       thisPassword.wordMinimumLength = atoi(arguments[1].c_str());
 
-      return 0;
-
     }
 
     else if ( flag == 'n' ) {
@@ -174,8 +173,6 @@ int main(int argc, char **argv) {
       std::string count = optarg;
 
       passwordCount = atoi(count.c_str());
-
-      return 0;
 
     }
 
@@ -188,17 +185,14 @@ int main(int argc, char **argv) {
       thisPassword.separatorType = arguments[0];
       thisPassword.separatorCount = atoi(arguments[1].c_str());
 
-      return 0;
-
     }
 
-    else if ( flag == 'u' ) {
-
-      // use - Specify a configuration file to use instead of the default .chbspasswdrc
-
-      return 0;
-
-    }
+// Planned implementation in v0.2
+//    else if ( flag == 'u' ) {
+//
+//      // use - Specify a configuration file to use instead of the default .chbspasswdrc
+//
+//    }
 
     else if ( flag == 'v' ) {
 
@@ -218,7 +212,6 @@ int main(int argc, char **argv) {
 
       thisPassword.wordCount = atoi(count.c_str());
 
-      return 0;
     }
 
     else if ( flag == 'x' ) {
@@ -233,65 +226,54 @@ int main(int argc, char **argv) {
 
   }
 
+  if ( DEBUG ) {
+    std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
+    std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; // debug message
+    std::cout << "insideType: " << thisPassword.insideType << std::endl; // debug message
+    std::cout << "insideCount: " << thisPassword.insideCount << std::endl; // debug message
+    std::cout << "afterType: " << thisPassword.afterType << std::endl; // debug message
+    std::cout << "afterCount: " << thisPassword.afterCount << std::endl; // debug message
+  }
+
   thisPassword.getPassword();
 }
 
 CHBSPassword::CHBSPassword() {
 
+  // Define valid character types
+  validSpecialCharacters = "~!@#$%^&*?";
+  validSeparators = "~,.-_=+:";
+
+  // Set defaults for password to be similar to: 5.Cool.Mountain.Africa.$
   wordCount = 3;
-  //separatorEnabled = true;
-  //separatorCharacterCount = 1;
-  padMaxLength = 5;
+  wordMinimumLength = 3;
+  wordMaximumLength = 8;
+
+  wordCase = "INITIAL";
+
+  separatorEnabled = true;
+  separatorType = "SAME";
+  separatorCount = 1;
+
+  padMinimumLength = 1;
+  padMaximumLength = 10;
+
+  beforeType = "DIGITS";
+  beforeCount = 1;
+
+  afterType = "SPECIAL";
+  afterCount = 1;
+
+  insideType = "NONE";
+  insideCount = 0;
+
+  eleetEnabled = false;
 
 }
 
 std::string CHBSPassword::getPassword(){
 
   // Build and return password based on the defaults in the configuration file and modifying switches.
-
-}
-
-static bool isValidPadType ( std::string padType ) {
-
-  //std::transform(padType.begin(), padType.end(), padType.begin(), ::tolower);
-
-  if ( padType == "d" || padType == "digits") {
-    // Using Pad of Digits
-    std::cout << "DIGITS" << std::endl; // debug message
-    
-    return 1;
-  }
-  else if ( padType == "s" || padType == "special") {
-    // Using Pad of Special Characters
-    std::cout << "SPECIAL" << std::endl; // debug message
-    
-    return true;
-  }
-  else if ( padType == "m" || padType == "mixed") {
-    // Using Pad of Mixed Digits and Special Characters
-    std::cout << "MIXED" << std::endl; // debug message
-    
-    return true;
-  }
-  else {
-    // invalid argument
-    std::cout << "./chbspasswd: unexpected argument -- " << padType << std::endl;
-    showHelp();
-
-    return false;
-  }
-
-  std::cout << "HERE" << std::endl; // debug message
-}
-
-bool isValidPadCount ( int padCount, int padMaxLength ) {
-
-  if ( padCount <= padMaxLength ) {
-    return true;
-  }
-  else {
-    return false;
-  }
 
 }
 
@@ -316,10 +298,113 @@ std::string CHBSPassword::getInsideString() {
 
 }
 
-std::string CHBSPassword::getPadString ( std::string padType, std::string count ){
+std::string CHBSPassword::getPad ( std::string padType, std::string count ){
 
   // Called by get{Before,After,Inside} to use variables to build and return string.
   
+}
+
+int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount ) {
+
+  // Convert padType for validation comparison.
+  std::string type = CHBSPassword::convertPadType ( padType );
+
+  // Convert padCount for validation comparison.
+  int Count = CHBSPassword::convertPadCount ( padCount );
+
+  // Validate padType is one of the accepted types
+  //   and
+  // Validate padCount is within minimum to maximum length range
+
+  if ( CHBSPassword::isValidPadType ( type )
+         &&
+       CHBSPassword::isValidPadCount ( Count, thisPassword.padMinimumLength, thisPassword.padMaximumLength ) ) {
+
+    // Assign correct class variables based on padPosition.
+    if ( padPosition == "before" ) {
+
+      thisPassword.beforeType = type;
+      thisPassword.beforeCount = Count;
+
+    }
+    else if ( padPosition == "inside" ) {
+
+      thisPassword.insideType = type;
+      thisPassword.insideCount = Count;
+
+    }
+    else if ( padPosition == "after" ) {
+
+      thisPassword.afterType = type;
+      thisPassword.afterCount = Count;
+
+    }
+    else {
+
+      return -1;
+
+    }
+
+  }
+
+}
+
+std::string CHBSPassword::convertPadType ( std::string padType ) {
+
+  // Convert string padType to upper case string for later comparison in validation function.
+
+  std::transform(padType.begin(), padType.end(), padType.begin(), ::toupper);
+
+  return padType;
+
+}
+
+int CHBSPassword::convertPadCount ( std::string padCount ) {
+
+  // Convert string padCount to int Count.
+
+  int Count = atoi(padCount.c_str());
+
+  return Count;
+
+}
+
+bool CHBSPassword::isValidPadType ( std::string padType ) {
+
+  if ( padType == "D" || padType == "DIGITS") {
+    // Using Pad of Digits
+    
+    return 1;
+  }
+  else if ( padType == "S" || padType == "SPECIAL") {
+    // Using Pad of Special Characters
+    
+    return true;
+  }
+  else if ( padType == "M" || padType == "MIXED") {
+    // Using Pad of Mixed Digits and Special Characters
+    
+    return true;
+  }
+  else {
+    // invalid argument
+    std::cout << "./chbspasswd: unexpected argument -- " << padType << std::endl;
+    showHelp();
+
+    return false;
+  }
+
+}
+
+bool CHBSPassword::isValidPadCount ( int padCount, int padMinimumLength, int padMaximumLength ) {
+
+  if ( padCount <= padMaximumLength ) {
+    return true;
+  }
+  else {
+    return false;
+  }
+
 }
 
 int showHelp() {
