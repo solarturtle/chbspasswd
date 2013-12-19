@@ -41,20 +41,21 @@ class CHBSPassword {
 
     std::string  wordCase;
 
+    int          setSeparator();
     std::string  getSeparator();
     bool         separatorEnabled;
     std::string  separatorType;
     int          separatorCount;
 
-    std::string  getPad ( std::string, std::string );
     int          setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount);
+    std::string  getPad ( CHBSPassword& thisPassword, std::string padPosition );
     int          padMinimumLength;
     int          padMaximumLength;
 
-    static std::string  convertPadType ( std::string );
-    static int          convertPadCount ( std::string );
-    static bool         isValidPadType ( std::string );
-    static bool         isValidPadCount ( int, int, int );
+    static std::string  convertPadType ( std::string padType );
+    static int          convertPadCount ( std::string padCount );
+    static bool         isValidPadType ( std::string padType );
+    static bool         isValidPadCount ( int padCount, int padMinimumLength, int padMaximumLength );
 
     std::string  getBefore();
     bool         beforeEnabled;
@@ -286,31 +287,22 @@ std::string CHBSPassword::getPassword(){
 
 }
 
-std::string CHBSPassword::getBefore() {
+std::string CHBSPassword::getWord(){
 
-  // Return string for ...
-  // before - Add string of digits, special characters, or a combination to the beginning of the password.
-  
-}
-
-std::string CHBSPassword::getAfter() {
-
-  // Return string for ...
-  // after - Add string of digits, special characters, or a combination to the end of the password.
+  // Select a word from the dictionary based on the minimum and maximum length criteria.
 
 }
 
-std::string CHBSPassword::getInside() {
+int CHBSPassword::setSeparator(){
 
-  // Return string for ...
-  // inside - Add string of digits, special characters, or a combination between the words inside the password.
+  // Set separator variables
 
 }
 
-std::string CHBSPassword::getPad ( std::string padType, std::string count ){
+std::string CHBSPassword::getSeparator(){
 
-  // Called by get{Before,After,Inside} to use variables to build and return string.
-  
+  // Use separator variables to build and return seperator or returns saved separator if separatorType == SAME.
+
 }
 
 int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount ) {
@@ -358,7 +350,20 @@ int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, 
     }
 
   }
+  else {
 
+    return -1;
+
+  }
+
+  return 0;
+
+}
+
+std::string CHBSPassword::getPad ( CHBSPassword& thisPassword, std::string padPosition ) {
+
+  // Called by get{Before,After,Inside} to use variables to build and return string.
+  
 }
 
 std::string CHBSPassword::convertPadType ( std::string padType ) {
@@ -416,6 +421,27 @@ bool CHBSPassword::isValidPadCount ( int padCount, int padMinimumLength, int pad
   else {
     return false;
   }
+
+}
+
+std::string CHBSPassword::getBefore() {
+
+  // Return string for ...
+  // before - Add string of digits, special characters, or a combination to the beginning of the password.
+  
+}
+
+std::string CHBSPassword::getInside() {
+
+  // Return string for ...
+  // inside - Add string of digits, special characters, or a combination between the words inside the password.
+
+}
+
+std::string CHBSPassword::getAfter() {
+
+  // Return string for ...
+  // after - Add string of digits, special characters, or a combination to the end of the password.
 
 }
 
