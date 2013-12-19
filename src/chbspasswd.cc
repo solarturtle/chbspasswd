@@ -1,19 +1,19 @@
 // chbspasswd v0.1
-// 
+//
 // A password generator inspired by XKCD 936: Password Strength and xkpasswd.net
-// 
+//
 // Copyright (C) 2013-2014, Charles H. Leggett
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -28,7 +28,7 @@ class CHBSPassword {
   public:
 
     CHBSPassword();
-    
+
     std::string  getPassword();
 
     std::string  validSpecialCharacters;
@@ -127,7 +127,7 @@ int main(int argc, char **argv) {
       thisPassword.wordCase = caseType;
 
     }
-    
+
     else if ( flag == 'e' ) {
 
       // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
@@ -363,7 +363,7 @@ int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, 
 std::string CHBSPassword::getPad ( CHBSPassword& thisPassword, std::string padPosition ) {
 
   // Called by get{Before,After,Inside} to use variables to build and return string.
-  
+
 }
 
 std::string CHBSPassword::convertPadType ( std::string padType ) {
@@ -390,17 +390,17 @@ bool CHBSPassword::isValidPadType ( std::string padType ) {
 
   if ( padType == "D" || padType == "DIGITS") {
     // Using Pad of Digits
-    
+
     return 1;
   }
   else if ( padType == "S" || padType == "SPECIAL") {
     // Using Pad of Special Characters
-    
+
     return true;
   }
   else if ( padType == "M" || padType == "MIXED") {
     // Using Pad of Mixed Digits and Special Characters
-    
+
     return true;
   }
   else {
@@ -428,7 +428,7 @@ std::string CHBSPassword::getBefore() {
 
   // Return string for ...
   // before - Add string of digits, special characters, or a combination to the beginning of the password.
-  
+
 }
 
 std::string CHBSPassword::getInside() {
@@ -461,7 +461,7 @@ int showHelp() {
   std::cout << std::endl;
 
   return 0;
-  
+
 }
 
 int showVersion() {
@@ -487,14 +487,14 @@ int showCHBS() {
 std::vector<std::string> tokenize(std::string delimiterSeparatedString, char delimiter) {
 
   // Accepts a delimiter separated string and the specified delimiter.
-  
+
   std::istringstream iss(delimiterSeparatedString);
 
   // Tokenizes the string and puts the tokens into a vector
-  
+
   std::string token;
   std::vector<std::string> tokens;
-  
+
   while (std::getline(iss, token, delimiter)) {
     tokens.push_back(token);
   }
