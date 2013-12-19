@@ -56,15 +56,15 @@ class CHBSPassword {
     static bool         isValidPadType ( std::string );
     static bool         isValidPadCount ( int, int, int );
 
-    std::string  getBeforeString();
+    std::string  getBefore();
     std::string  beforeType;
     int          beforeCount;
 
-    std::string  getAfterString();
+    std::string  getAfter();
     std::string  afterType;
     int          afterCount;
 
-    std::string  getInsideString();
+    std::string  getInside();
     std::string  insideType;
     int          insideCount;
 
@@ -277,21 +277,21 @@ std::string CHBSPassword::getPassword(){
 
 }
 
-std::string CHBSPassword::getBeforeString() {
+std::string CHBSPassword::getBefore() {
 
   // Return string for ...
   // before - Add string of digits, special characters, or a combination to the beginning of the password.
   
 }
 
-std::string CHBSPassword::getAfterString() {
+std::string CHBSPassword::getAfter() {
 
   // Return string for ...
   // after - Add string of digits, special characters, or a combination to the end of the password.
 
 }
 
-std::string CHBSPassword::getInsideString() {
+std::string CHBSPassword::getInside() {
 
   // Return string for ...
   // inside - Add string of digits, special characters, or a combination between the words inside the password.
