@@ -31,6 +31,7 @@ class CHBSPassword {
 
     std::string  getPassword();
 
+    std::string  validDigits;
     std::string  validSpecialCharacters;
     std::string  validSeparators;
 
@@ -48,7 +49,7 @@ class CHBSPassword {
     int          separatorCount;
 
     int          setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount);
-    std::string  getPad ( CHBSPassword& thisPassword, std::string padPosition );
+    std::string  getPad ( std::string padPosition );
     int          padMinimumLength;
     int          padMaximumLength;
 
@@ -230,6 +231,9 @@ int main(int argc, char **argv) {
 
   }
 
+  std::cout << "insidePad: " << thisPassword.getPad ( "inside" ) << std::endl; // debug message
+  thisPassword.getPassword();
+
   if ( DEBUG ) {
     std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; // debug message
     std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
@@ -241,14 +245,13 @@ int main(int argc, char **argv) {
     std::cout << "afterType: " << thisPassword.afterType << std::endl; // debug message
     std::cout << "afterCount: " << thisPassword.afterCount << std::endl; // debug message
   }
-
-  thisPassword.getPassword();
 }
 
 CHBSPassword::CHBSPassword() {
 
   // Define valid character types
-  validSpecialCharacters = "~!@#$%^&*?";
+  validDigits = "0123456789";
+  validSpecialCharacters = "!@#$%^&*?";
   validSeparators = "~,.-_=+:";
 
   // Set defaults for password to be similar to: 5.Cool.Mountain.Africa.$
@@ -360,10 +363,72 @@ int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, 
 
 }
 
-std::string CHBSPassword::getPad ( CHBSPassword& thisPassword, std::string padPosition ) {
+std::string CHBSPassword::getPad ( std::string padPosition ) {
 
   // Called by get{Before,After,Inside} to use variables to build and return string.
 
+  // Set local variables to value of padPosition variables
+
+  std::string type = "";
+  int Count = 0;
+
+  if ( padPosition == "before" ) {
+
+    type = beforeType;
+    Count = beforeCount;
+
+  }
+  else if ( padPosition == "inside" ) {
+
+    type = insideType;
+    Count = insideCount;
+
+  }
+  else if ( padPosition == "after" ) {
+
+    type = afterType;
+    Count = afterCount;
+
+  }
+ 
+  // Set validCharacters to include requested character sets
+
+  std::string validCharacters = "";
+
+  if ( type == "D" || type == "DIGITS") {
+
+    // Using Pad of Digits
+
+    validCharacters += validDigits;
+
+  }
+  else if ( type == "S" || type == "SPECIAL") {
+
+    // Using Pad of Special Characters
+
+    validCharacters += validSpecialCharacters;
+
+  }
+  else if ( type == "M" || type == "MIXED") {
+
+    // Using Pad of Mixed Digits and Special Characters
+
+    validCharacters += validDigits;
+    validCharacters += validSpecialCharacters;
+
+  }
+
+  // Build and return randomized pad string
+
+  std::string pad = "";
+
+  srand (time(NULL));
+
+  for (int i = 0; i < Count; i++) {
+    pad += validCharacters[rand() % validCharacters.length()];
+  }
+
+  return pad;
 }
 
 std::string CHBSPassword::convertPadType ( std::string padType ) {
