@@ -48,7 +48,7 @@ class CHBSPassword {
     std::string  separatorType;
     int          separatorCount;
 
-    int          setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount);
+    int          setPad ( std::string padPosition, std::string padType, std::string padCount);
     std::string  getPad ( std::string padPosition );
     int          padMinimumLength;
     int          padMaximumLength;
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
       arguments = tokenize ( optarg, ',' );
 
       // Set pad variables
-      thisPassword.setPad ( thisPassword, "after", arguments[0], arguments[1] );
+      thisPassword.setPad ( "after", arguments[0], arguments[1] );
 
     }
 
@@ -115,7 +115,7 @@ int main(int argc, char **argv) {
       arguments = tokenize ( optarg, ',' );
 
       // Set pad variables
-      thisPassword.setPad ( thisPassword, "before", arguments[0], arguments[1] );
+      thisPassword.setPad ( "before", arguments[0], arguments[1] );
 
     }
 
@@ -156,7 +156,7 @@ int main(int argc, char **argv) {
       arguments = tokenize ( optarg, ',' );
 
       // Set pad variables
-      thisPassword.setPad ( thisPassword, "inside", arguments[0], arguments[1] );
+      thisPassword.setPad ( "inside", arguments[0], arguments[1] );
 
     }
 
@@ -308,7 +308,7 @@ std::string CHBSPassword::getSeparator(){
 
 }
 
-int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, std::string padType, std::string padCount ) {
+int CHBSPassword::setPad ( std::string padPosition, std::string padType, std::string padCount ) {
 
   // Convert padType for validation comparison.
   std::string type = CHBSPassword::convertPadType ( padType );
@@ -322,28 +322,28 @@ int CHBSPassword::setPad ( CHBSPassword& thisPassword, std::string padPosition, 
 
   if ( CHBSPassword::isValidPadType ( type )
          &&
-       CHBSPassword::isValidPadCount ( Count, thisPassword.padMinimumLength, thisPassword.padMaximumLength ) ) {
+       CHBSPassword::isValidPadCount ( Count, padMinimumLength, padMaximumLength ) ) {
 
     // Assign correct class variables based on padPosition.
     if ( padPosition == "before" ) {
 
-      thisPassword.beforeEnabled = true;
-      thisPassword.beforeType = type;
-      thisPassword.beforeCount = Count;
+      beforeEnabled = true;
+      beforeType = type;
+      beforeCount = Count;
 
     }
     else if ( padPosition == "inside" ) {
 
-      thisPassword.insideEnabled = true;
-      thisPassword.insideType = type;
-      thisPassword.insideCount = Count;
+      insideEnabled = true;
+      insideType = type;
+      insideCount = Count;
 
     }
     else if ( padPosition == "after" ) {
 
-      thisPassword.afterEnabled = true;
-      thisPassword.afterType = type;
-      thisPassword.afterCount = Count;
+      afterEnabled = true;
+      afterType = type;
+      afterCount = Count;
 
     }
     else {
