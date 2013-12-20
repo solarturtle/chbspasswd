@@ -231,7 +231,11 @@ int main(int argc, char **argv) {
 
   }
 
-  std::cout << "insidePad: " << thisPassword.getPad ( "inside" ) << std::endl; // debug message
+  std::cout << "beforePad: " << thisPassword.getBefore() << std::endl; // debug message
+  std::cout << "insidePad: " << thisPassword.getInside() << std::endl; // debug message
+  std::cout << "afterPad: " << thisPassword.getAfter()  << std::endl; // debug message
+  std::cout << std::endl; // debug message
+
   thisPassword.getPassword();
 
   if ( DEBUG ) {
@@ -494,6 +498,8 @@ std::string CHBSPassword::getBefore() {
   // Return string for ...
   // before - Add string of digits, special characters, or a combination to the beginning of the password.
 
+  return getPad ( "before" );
+
 }
 
 std::string CHBSPassword::getInside() {
@@ -501,12 +507,16 @@ std::string CHBSPassword::getInside() {
   // Return string for ...
   // inside - Add string of digits, special characters, or a combination between the words inside the password.
 
+  return getPad ( "inside" );
+
 }
 
 std::string CHBSPassword::getAfter() {
 
   // Return string for ...
   // after - Add string of digits, special characters, or a combination to the end of the password.
+
+  return getPad ( "after" );
 
 }
 
