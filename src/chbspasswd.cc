@@ -231,24 +231,24 @@ int main(int argc, char **argv) {
 
   }
 
-  std::cout << "beforePad: " << thisPassword.getBefore() << std::endl; // debug message
-  std::cout << "insidePad: " << thisPassword.getInside() << std::endl; // debug message
-  std::cout << "afterPad: " << thisPassword.getAfter()  << std::endl; // debug message
-  std::cout << std::endl; // debug message
-
-  thisPassword.getPassword();
-
   if ( DEBUG ) {
+    std::cout << std::endl; // debug message
     std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; // debug message
     std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
     std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; // debug message
+    std::cout << std::endl; // debug message
     std::cout << "insideEnabled: " << thisPassword.insideEnabled << std::endl; // debug message
     std::cout << "insideType: " << thisPassword.insideType << std::endl; // debug message
     std::cout << "insideCount: " << thisPassword.insideCount << std::endl; // debug message
+    std::cout << std::endl; // debug message
     std::cout << "afterEnabled: " << thisPassword.afterEnabled << std::endl; // debug message
     std::cout << "afterType: " << thisPassword.afterType << std::endl; // debug message
     std::cout << "afterCount: " << thisPassword.afterCount << std::endl; // debug message
+    std::cout << std::endl; // debug message
   }
+
+    std::cout << thisPassword.getPassword() << std::endl;
+
 }
 
 CHBSPassword::CHBSPassword() {
