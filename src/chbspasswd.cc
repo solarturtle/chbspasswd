@@ -292,6 +292,15 @@ std::string CHBSPassword::getPassword(){
 
   // Build and return password based on the defaults in the configuration file and modifying switches.
 
+  std::string password = "";
+
+  password += getBefore();
+  password += getSeparator();
+  password += getInside();
+  password += getSeparator();
+  password += getAfter();
+
+  return password;
 }
 
 std::string CHBSPassword::getWord(){
@@ -309,6 +318,12 @@ int CHBSPassword::setSeparator(){
 std::string CHBSPassword::getSeparator(){
 
   // Use separator variables to build and return seperator or returns saved separator if separatorType == SAME.
+
+  // Temporary return to get getPassword moving early
+
+  std::string separator = ".";
+
+  return separator;
 
 }
 
