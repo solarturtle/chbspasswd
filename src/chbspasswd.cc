@@ -426,7 +426,7 @@ std::string CHBSPassword::getPad ( std::string padPosition ) {
 
   std::string pad = "";
 
-  srand (time(NULL));
+  srand( clock() );
 
   for (int i = 0; i < Count; i++) {
     pad += validCharacters[rand() % validCharacters.length()];
