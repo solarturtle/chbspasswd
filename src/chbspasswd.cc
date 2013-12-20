@@ -77,13 +77,14 @@ class CHBSPassword {
 
 };
 
-int showHelp();
-int showVersion();
-int showCHBS();
+int         showHelp();
+int         showVersion();
+int         showCHBS();
+std::string dictionary();
 
 std::vector<std::string> tokenize ( std::string, char );
 
-int main(int argc, char **argv) {
+int main ( int argc, char **argv ) {
 
   bool DEBUG = true;
 
@@ -93,7 +94,7 @@ int main(int argc, char **argv) {
   int flag;
   std::vector<std::string> arguments;
 
-  while ((flag = getopt(argc, argv, "a:b:c:e:hi:l:n:s:u:vw:x")) != EOF) {
+  while ( ( flag = getopt ( argc, argv, "a:b:c:e:hi:l:n:s:u:vw:x" ) ) != EOF ) {
 
     if ( flag == 'a' ) {
 
@@ -166,8 +167,8 @@ int main(int argc, char **argv) {
 
       arguments = tokenize ( optarg, ',' );
 
-      thisPassword.wordMinimumLength = atoi(arguments[0].c_str());
-      thisPassword.wordMinimumLength = atoi(arguments[1].c_str());
+      thisPassword.wordMinimumLength = atoi ( arguments[0].c_str() );
+      thisPassword.wordMinimumLength = atoi ( arguments[1].c_str() );
 
     }
 
@@ -247,6 +248,7 @@ int main(int argc, char **argv) {
     std::cout << std::endl; // debug message
   }
 
+  dictionary();
     std::cout << thisPassword.getPassword() << std::endl;
 
 }
@@ -288,34 +290,33 @@ CHBSPassword::CHBSPassword() {
 
 }
 
-std::string CHBSPassword::getPassword(){
+std::string CHBSPassword::getPassword() {
 
   // Build and return password based on the defaults in the configuration file and modifying switches.
 
   std::string password = "";
 
-  password += getBefore();
-  password += getSeparator();
   password += getInside();
   password += getSeparator();
   password += getAfter();
 
   return password;
+
 }
 
-std::string CHBSPassword::getWord(){
+std::string CHBSPassword::getWord() {
 
   // Select a word from the dictionary based on the minimum and maximum length criteria.
 
 }
 
-int CHBSPassword::setSeparator(){
+int CHBSPassword::setSeparator() {
 
   // Set separator variables
 
 }
 
-std::string CHBSPassword::getSeparator(){
+std::string CHBSPassword::getSeparator() {
 
   // Use separator variables to build and return seperator or returns saved separator if separatorType == SAME.
 
@@ -414,21 +415,21 @@ std::string CHBSPassword::getPad ( std::string padPosition ) {
 
   std::string validCharacters = "";
 
-  if ( type == "D" || type == "DIGITS") {
+  if ( type == "D" || type == "DIGITS" ) {
 
     // Using Pad of Digits
 
     validCharacters += validDigits;
 
   }
-  else if ( type == "S" || type == "SPECIAL") {
+  else if ( type == "S" || type == "SPECIAL" ) {
 
     // Using Pad of Special Characters
 
     validCharacters += validSpecialCharacters;
 
   }
-  else if ( type == "M" || type == "MIXED") {
+  else if ( type == "M" || type == "MIXED" ) {
 
     // Using Pad of Mixed Digits and Special Characters
 
@@ -443,8 +444,8 @@ std::string CHBSPassword::getPad ( std::string padPosition ) {
 
   srand( clock() );
 
-  for (int i = 0; i < Count; i++) {
-    pad += validCharacters[rand() % validCharacters.length()];
+  for ( int i = 0; i < Count; i++ ) {
+    pad += validCharacters[ rand() % validCharacters.length() ];
   }
 
   return pad;
@@ -454,7 +455,7 @@ std::string CHBSPassword::convertPadType ( std::string padType ) {
 
   // Convert string padType to upper case string for later comparison in validation function.
 
-  std::transform(padType.begin(), padType.end(), padType.begin(), ::toupper);
+  std::transform ( padType.begin(), padType.end(), padType.begin(), ::toupper );
 
   return padType;
 
@@ -464,7 +465,7 @@ int CHBSPassword::convertPadCount ( std::string padCount ) {
 
   // Convert string padCount to int Count.
 
-  int Count = atoi(padCount.c_str());
+  int Count = atoi ( padCount.c_str() );
 
   return Count;
 
@@ -472,17 +473,17 @@ int CHBSPassword::convertPadCount ( std::string padCount ) {
 
 bool CHBSPassword::isValidPadType ( std::string padType ) {
 
-  if ( padType == "D" || padType == "DIGITS") {
+  if ( padType == "D" || padType == "DIGITS" ) {
     // Using Pad of Digits
 
     return 1;
   }
-  else if ( padType == "S" || padType == "SPECIAL") {
+  else if ( padType == "S" || padType == "SPECIAL" ) {
     // Using Pad of Special Characters
 
     return true;
   }
-  else if ( padType == "M" || padType == "MIXED") {
+  else if ( padType == "M" || padType == "MIXED" ) {
     // Using Pad of Mixed Digits and Special Characters
 
     return true;
@@ -574,24 +575,32 @@ int showCHBS() {
 
 }
 
-std::vector<std::string> tokenize(std::string delimiterSeparatedString, char delimiter) {
+std::vector<std::string> tokenize ( std::string delimiterSeparatedString, char delimiter ) {
 
   // Accepts a delimiter separated string and the specified delimiter.
 
-  std::istringstream iss(delimiterSeparatedString);
+  std::istringstream iss ( delimiterSeparatedString );
 
   // Tokenizes the string and puts the tokens into a vector
 
   std::string token;
   std::vector<std::string> tokens;
 
-  while (std::getline(iss, token, delimiter)) {
+  while ( std::getline ( iss, token, delimiter ) ) {
     tokens.push_back(token);
   }
 
   // Returns the vector.
-
   return tokens;
 
-};
+}
 
+std::string dictionary() {
+
+  std::string dictionary = "foo,bar,baz";
+
+  std::cout << "dictionary: " << dictionary << std::endl; // debug message
+
+  return dictionary;
+
+}
