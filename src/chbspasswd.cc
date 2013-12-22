@@ -303,20 +303,24 @@ std::string CHBSPassword::getPassword() {
   // Add a before string if enabled
   if ( beforeEnabled ) {
     password += getBefore();
+    password += getSeparator();
   }
 
-  // Catch the case that no words are requested, but an inside string has been
-  if ( Count == 0 ) {
+  // If one or zero words are requested the -i option is invalid because an inside string is a separator betweem words.
+  if ( Count <= 1 ) {
     if ( insideEnabled == true && ( beforeEnabled == false || afterEnabled == false ) ) {
       std::cout << "unexpected option -- i" << std::endl;
       std::cout << "An INSIDE string is a seperator between WORDS." << std::endl;
-      std::cout << "If no words are requested (-w 0) then -i is invalid." << std::endl;
+      std::cout << "If either one (-w 1) or zero (-w 0) words are requested then -i is invalid." << std::endl;
       return "";
-    }
+     }
   }
 
-  // While there are words to add inside strings if enabled, add seperator, then add a word
-  while ( Count > 0 ) {
+  // While there are more than one words to add, first add a word and then add either a separated inside string if enabled or just a seperator
+  while ( Count > 1 ) {
+
+    password += getWord();
+
     if ( insideEnabled ) {
       password += getSeparator();
       password += getInside();
@@ -325,8 +329,12 @@ std::string CHBSPassword::getPassword() {
     else {
       password += getSeparator();
     }
-    password += getWord();
     Count--;
+  }
+
+  // If there is only one word is requested, or if there is only one left, just add a word.
+  if ( Count == 1 ) {
+    password += getWord();
   }
 
   // Add a before string if enabled
