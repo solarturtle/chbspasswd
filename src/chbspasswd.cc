@@ -51,6 +51,7 @@ class CHBSPassword {
 
     int          setPad ( std::string padPosition, std::string padType, std::string padCount);
     std::string  getPad ( std::string padPosition );
+    bool         padDefaultsOverridden;
     int          padMinimumLength;
     int          padMaximumLength;
 
@@ -272,6 +273,7 @@ CHBSPassword::CHBSPassword() {
   separatorType = "SAME";
   separatorCount = 1;
 
+  padDefaultsOverridden = false;  // This should always be false in the constructor. It will be set to true if _any_ pad option is specified on the commandline b/c if so, all pad options should be disabled and then set to the options specified
   padMinimumLength = 1;
   padMaximumLength = 10;
 
@@ -418,6 +420,17 @@ int CHBSPassword::setPad ( std::string padPosition, std::string padType, std::st
   if ( CHBSPassword::isValidPadType ( type )
          &&
        CHBSPassword::isValidPadCount ( Count, padMinimumLength, padMaximumLength ) ) {
+
+    // If the default pad options are not yet overriden, set each enabled to false and then set overriden to true to skip this on future runs to avoid disabling command line options that are already set.
+    if ( padDefaultsOverridden == false ) {
+
+      beforeEnabled = false;
+      insideEnabled = false;
+      afterEnabled = false;
+
+      padDefaultsOverridden = true;
+
+    }
 
     // Assign correct class variables based on padPosition.
     if ( padPosition == "before" ) {
