@@ -305,11 +305,14 @@ std::string CHBSPassword::getPassword() {
     password += getBefore();
   }
 
-  if ( insideEnabled == true && ( beforeEnabled == false || afterEnabled == false ) ) {
-    std::cout << "unexpected option -- i" << std::endl;
-    std::cout << "An INSIDE string is a seperator between WORDS." << std::endl;
-    std::cout << "If no words are requested (-w 0) then -i is invalid." << std::endl;
-    return "";
+  // Catch the case that no words are requested, but an inside string has been
+  if ( Count == 0 ) {
+    if ( insideEnabled == true && ( beforeEnabled == false || afterEnabled == false ) ) {
+      std::cout << "unexpected option -- i" << std::endl;
+      std::cout << "An INSIDE string is a seperator between WORDS." << std::endl;
+      std::cout << "If no words are requested (-w 0) then -i is invalid." << std::endl;
+      return "";
+    }
   }
 
   // While there are words to add inside strings if enabled, add seperator, then add a word
