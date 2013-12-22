@@ -296,14 +296,41 @@ std::string CHBSPassword::getPassword() {
   // Build and return password based on the defaults in the configuration file and modifying switches.
 
   std::string password = "";
+  int Count = wordCount;
 
-  password += getBefore();
-  password += getSeparator();
-  password += getWord();
-  password += getSeparator();
-  password += getInside();
-  password += getSeparator();
-  password += getAfter();
+  // Add a before string if enabled
+  if ( beforeEnabled ) {
+    password += getBefore();
+  }
+
+  // If there are no words to add just add an inside string if enabled
+  if ( Count == 0 ) {
+    if ( insideEnabled ) {
+      password += getSeparator();
+      password += getInside();
+      password += getSeparator();
+    }
+  }
+
+  // While there are words to add inside strings if enabled, add seperator, then add a word
+  while ( Count > 0 ) {
+    if ( insideEnabled ) {
+      password += getSeparator();
+      password += getInside();
+      password += getSeparator();
+    }
+    else {
+      password += getSeparator();
+    }
+    password += getWord();
+    Count--;
+  }
+
+  // Add a before string if enabled
+  if ( afterEnabled ) {
+    password += getSeparator();
+    password += getAfter();
+  }
 
   return password;
 
