@@ -305,7 +305,7 @@ std::string CHBSPassword::getPassword() {
     password += getBefore();
   }
 
-  if ( insideEnabled == true && beforeEnabled == false && afterEnabled == false ) {
+  if ( insideEnabled == true && ( beforeEnabled == false || afterEnabled == false ) ) {
     std::cout << "unexpected option -- i" << std::endl;
     std::cout << "An INSIDE string is a seperator between WORDS." << std::endl;
     std::cout << "If no words are requested (-w 0) then -i is invalid." << std::endl;
