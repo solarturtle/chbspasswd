@@ -91,7 +91,7 @@ int main ( int argc, char **argv ) {
 
   srand( clock() );
 
-  int passwordCount;
+  int passwordCount = 1;
   CHBSPassword thisPassword;
 
   int flag;
@@ -237,6 +237,8 @@ int main ( int argc, char **argv ) {
 
   if ( DEBUG ) {
     std::cout << std::endl; // debug message
+    std::cout << "passwordCount: " << passwordCount << std::endl; // debug message
+    std::cout << std::endl; // debug message
     std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; // debug message
     std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
     std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; // debug message
@@ -251,7 +253,9 @@ int main ( int argc, char **argv ) {
     std::cout << std::endl; // debug message
   }
 
-  std::cout << thisPassword.getPassword() << std::endl;
+  for ( int i = 1; i <= passwordCount; i++ ) {
+    std::cout << thisPassword.getPassword() << std::endl;
+  }
 
 }
 
