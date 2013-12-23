@@ -97,7 +97,7 @@ int main ( int argc, char **argv ) {
   int flag;
   std::vector<std::string> arguments;
 
-  while ( ( flag = getopt ( argc, argv, "a:b:c:e:hi:l:n:s:u:vw:x" ) ) != EOF ) {
+  while ( ( flag = getopt ( argc, argv, "a:b:c:ehi:l:n:s:u:vw:x" ) ) != EOF ) {
 
     if ( flag == 'a' ) {
 
