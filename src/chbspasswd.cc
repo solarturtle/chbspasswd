@@ -184,7 +184,7 @@ int main ( int argc, char **argv ) {
       passwordCount = atoi(count.c_str());
 
       if ( passwordCount <= 0 ) {
-      
+
         std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- n" << std::endl;
         std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
 
@@ -254,23 +254,38 @@ int main ( int argc, char **argv ) {
   }
 
   if ( DEBUG ) {
-    std::cout << std::endl; // debug message
-    std::cout << "passwordCount: " << passwordCount << std::endl; // debug message
-    std::cout << std::endl; // debug message
-    std::cout << "eleetEnabled: " << thisPassword.eleetEnabled << std::endl; // debug message
-    std::cout << std::endl; // debug message
-    std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; // debug message
-    std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
-    std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; // debug message
-    std::cout << std::endl; // debug message
-    std::cout << "insideEnabled: " << thisPassword.insideEnabled << std::endl; // debug message
-    std::cout << "insideType: " << thisPassword.insideType << std::endl; // debug message
-    std::cout << "insideCount: " << thisPassword.insideCount << std::endl; // debug message
-    std::cout << std::endl; // debug message
-    std::cout << "afterEnabled: " << thisPassword.afterEnabled << std::endl; // debug message
-    std::cout << "afterType: " << thisPassword.afterType << std::endl; // debug message
-    std::cout << "afterCount: " << thisPassword.afterCount << std::endl; // debug message
-    std::cout << std::endl; // debug message
+    std::cout << std::endl; 
+    std::cout << "passwordCount: " << passwordCount << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "wordCount: " << thisPassword.wordCount << std::endl; 
+    std::cout << "wordMinimumLength: " << thisPassword.wordMinimumLength << std::endl; 
+    std::cout << "wordMaximumLength: " << thisPassword.wordMaximumLength << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "validSeparators: " << thisPassword.validSeparators << std::endl; 
+    std::cout << "separatorEnabled: " << thisPassword.separatorEnabled << std::endl; 
+    std::cout << "separatorType: " << thisPassword.separatorType << std::endl; 
+    std::cout << "separatorCount: " << thisPassword.separatorCount << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "validDigits: " << thisPassword.validDigits << std::endl; 
+    std::cout << "validSpecialCharacters: " << thisPassword.validSpecialCharacters << std::endl; 
+    std::cout << "padDefaultsOverridden: " << thisPassword.padDefaultsOverridden << std::endl; 
+    std::cout << "padMinimumLength: " << thisPassword.padMinimumLength << std::endl; 
+    std::cout << "padMaximumLength: " << thisPassword.padMaximumLength << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; 
+    std::cout << "beforeType: " << thisPassword.beforeType << std::endl; 
+    std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "insideEnabled: " << thisPassword.insideEnabled << std::endl; 
+    std::cout << "insideType: " << thisPassword.insideType << std::endl; 
+    std::cout << "insideCount: " << thisPassword.insideCount << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "afterEnabled: " << thisPassword.afterEnabled << std::endl; 
+    std::cout << "afterType: " << thisPassword.afterType << std::endl; 
+    std::cout << "afterCount: " << thisPassword.afterCount << std::endl; 
+    std::cout << std::endl; 
+    std::cout << "eleetEnabled: " << thisPassword.eleetEnabled << std::endl; 
+    std::cout << std::endl; 
   }
 
   for ( int i = 1; i <= passwordCount; i++ ) {
