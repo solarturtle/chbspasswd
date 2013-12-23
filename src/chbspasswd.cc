@@ -31,8 +31,8 @@ class CHBSPassword {
 
     std::string  getPassword();
 
-    std::string  validDigits;
-    std::string  validSpecialCharacters;
+    std::string  validPadDigits;
+    std::string  validPadSpecialCharacters;
     std::string  validSeparators;
 
     std::string  getWord();
@@ -266,8 +266,8 @@ int main ( int argc, char **argv ) {
     std::cout << "separatorType: " << thisPassword.separatorType << std::endl; 
     std::cout << "separatorCount: " << thisPassword.separatorCount << std::endl; 
     std::cout << std::endl; 
-    std::cout << "validDigits: " << thisPassword.validDigits << std::endl; 
-    std::cout << "validSpecialCharacters: " << thisPassword.validSpecialCharacters << std::endl; 
+    std::cout << "validPadDigits: " << thisPassword.validPadDigits << std::endl; 
+    std::cout << "validPadSpecialCharacters: " << thisPassword.validPadSpecialCharacters << std::endl; 
     std::cout << "padDefaultsOverridden: " << thisPassword.padDefaultsOverridden << std::endl; 
     std::cout << "padMinimumLength: " << thisPassword.padMinimumLength << std::endl; 
     std::cout << "padMaximumLength: " << thisPassword.padMaximumLength << std::endl; 
@@ -297,8 +297,8 @@ int main ( int argc, char **argv ) {
 CHBSPassword::CHBSPassword() {
 
   // Define valid character types
-  validDigits = "0123456789";
-  validSpecialCharacters = "!@#$%^&*?";
+  validPadDigits = "0123456789";
+  validPadSpecialCharacters = "!@#$%^&*?";
   validSeparators = "~,.-_=+:";
 
   // Set defaults for password to be similar to: 5.Cool.Mountain.Africa.$
@@ -557,22 +557,22 @@ std::string CHBSPassword::getPad ( std::string padPosition ) {
 
     // Using Pad of Digits
 
-    validCharacters += validDigits;
+    validCharacters += validPadDigits;
 
   }
   else if ( type == "S" || type == "SPECIAL" ) {
 
     // Using Pad of Special Characters
 
-    validCharacters += validSpecialCharacters;
+    validCharacters += validPadSpecialCharacters;
 
   }
   else if ( type == "M" || type == "MIXED" ) {
 
     // Using Pad of Mixed Digits and Special Characters
 
-    validCharacters += validDigits;
-    validCharacters += validSpecialCharacters;
+    validCharacters += validPadDigits;
+    validCharacters += validPadSpecialCharacters;
 
   }
 
