@@ -257,6 +257,8 @@ int main ( int argc, char **argv ) {
     std::cout << std::endl; // debug message
     std::cout << "passwordCount: " << passwordCount << std::endl; // debug message
     std::cout << std::endl; // debug message
+    std::cout << "eleetEnabled: " << thisPassword.eleetEnabled << std::endl; // debug message
+    std::cout << std::endl; // debug message
     std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; // debug message
     std::cout << "beforeType: " << thisPassword.beforeType << std::endl; // debug message
     std::cout << "beforeCount: " << thisPassword.beforeCount << std::endl; // debug message
