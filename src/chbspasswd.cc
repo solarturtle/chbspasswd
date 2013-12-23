@@ -183,6 +183,16 @@ int main ( int argc, char **argv ) {
 
       passwordCount = atoi(count.c_str());
 
+      if ( passwordCount <= 0 ) {
+      
+        std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- n" << std::endl;
+        std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
+
+        showHelp();
+
+        return -1;
+      }
+
     }
 
     else if ( flag == 's' ) {
@@ -230,6 +240,14 @@ int main ( int argc, char **argv ) {
       showCHBS();
 
       return 0;
+
+    }
+
+    else {
+
+      showHelp();
+
+      return -1;
 
     }
 
