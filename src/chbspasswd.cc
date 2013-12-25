@@ -308,15 +308,20 @@ CHBSPassword::CHBSPassword() {
 
   wordCase = "INITIAL";
 
-  separatorEnabled = true;
+  separatorEnabled = false;
   separatorType = "SAME";
   separatorCount = 1;
 
-  padDefaultsOverridden = false;  // This should always be false in the constructor. It will be set to true if _any_ pad option is specified on the commandline b/c if so, all pad options should be disabled and then set to the options specified
+  // padDefaultsOverridden should always be false in the constructor. It will
+  // be set to true if _any_ pad option is specified on the commandline b/c if
+  // so, all pad options should be disabled and then set to the options
+  // specified
+  padDefaultsOverridden = false;
+
   padMinimumLength = 1;
   padMaximumLength = 10;
 
-  beforeEnabled = true;
+  beforeEnabled = false;
   beforeType = "DIGITS";
   beforeCount = 1;
 
@@ -324,7 +329,7 @@ CHBSPassword::CHBSPassword() {
   insideType = "NONE";
   insideCount = 0;
 
-  afterEnabled = true;
+  afterEnabled = false;
   afterType = "SPECIAL";
   afterCount = 1;
 
