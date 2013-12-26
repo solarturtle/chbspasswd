@@ -233,6 +233,16 @@ int main ( int argc, char **argv ) {
 
       thisPassword.wordCount = atoi(count.c_str());
 
+      if ( thisPassword.wordCount < 0 ) {
+
+        std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- w" << std::endl;
+        std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 0" << std::endl;
+
+        showHelp();
+
+        return -1;
+      }
+
     }
 
     else if ( flag == 'x' ) {
