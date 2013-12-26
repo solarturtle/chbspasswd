@@ -53,13 +53,11 @@ class CHBSPassword {
     int          setPad ( std::string padPosition, std::string padType, std::string padCount);
     std::string  getPad ( std::string padPosition );
     bool         padDefaultsOverridden;
-    int          padMinimumLength;
-    int          padMaximumLength;
 
     static std::string  convertType ( std::string padType );
     static int          convertCount ( std::string padCount );
     static bool         isValidPadType ( std::string padType );
-    static bool         isValidPadCount ( int padCount, int padMinimumLength, int padMaximumLength );
+    static bool         isValidPadCount ( int padCount );
     bool         isValidSeparatorType ( std::string separatorType );
     bool         isValidSeparatorCount ( int separatorCount );
 
@@ -273,8 +271,6 @@ int main ( int argc, char **argv ) {
     std::cout << "validPadDigits: " << thisPassword.validPadDigits << std::endl; 
     std::cout << "validPadSpecialCharacters: " << thisPassword.validPadSpecialCharacters << std::endl; 
     std::cout << "padDefaultsOverridden: " << thisPassword.padDefaultsOverridden << std::endl; 
-    std::cout << "padMinimumLength: " << thisPassword.padMinimumLength << std::endl; 
-    std::cout << "padMaximumLength: " << thisPassword.padMaximumLength << std::endl; 
     std::cout << std::endl; 
     std::cout << "beforeEnabled: " << thisPassword.beforeEnabled << std::endl; 
     std::cout << "beforeType: " << thisPassword.beforeType << std::endl; 
@@ -328,9 +324,6 @@ CHBSPassword::CHBSPassword() {
   // pad options should be disabled and then set to the
   // options specified
   padDefaultsOverridden = false;
-
-  padMinimumLength = 1;
-  padMaximumLength = 10;
 
   beforeEnabled = false;
   beforeType = "DIGITS";
@@ -528,7 +521,7 @@ int CHBSPassword::setPad ( std::string padPosition, std::string padType, std::st
 
   if ( CHBSPassword::isValidPadType ( type )
          &&
-       CHBSPassword::isValidPadCount ( Count, padMinimumLength, padMaximumLength ) ) {
+       CHBSPassword::isValidPadCount ( Count ) ) {
 
     // If the default pad options are not yet overriden,
     // set each enabled to false and then set overriden to
@@ -696,12 +689,18 @@ bool CHBSPassword::isValidPadType ( std::string padType ) {
 
 }
 
-bool CHBSPassword::isValidPadCount ( int padCount, int padMinimumLength, int padMaximumLength ) {
+bool CHBSPassword::isValidPadCount ( int padCount ) {
 
-  if ( padCount <= padMaximumLength ) {
+  if ( padCount > 0 ) {
     return true;
   }
   else {
+
+    std::cout << "./chbspasswd: unexpected value" << std::endl;
+    std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
+
+    showHelp();
+
     return false;
   }
 
