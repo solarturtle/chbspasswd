@@ -500,7 +500,9 @@ std::string CHBSPassword::getSeparator() {
     }
 
     for ( int i = 0; i < Count; i++ ) {
+
       separator += validSeparators[ rand() % validSeparators.length() ];
+
     }
 
     if ( separatorType == "S" || separatorType == "SAME" ) {
@@ -545,22 +547,22 @@ int CHBSPassword::setPad ( std::string Position, std::string Type, std::string C
 
     }
 
-    // Assign correct class variables based on padPosition.
-    if ( padPosition == "before" ) {
+    // Assign correct class variables based on Position.
+    if ( Position == "before" ) {
 
       beforeEnabled = true;
       beforeType = type;
       beforeCount = Count;
 
     }
-    else if ( padPosition == "inside" ) {
+    else if ( Position == "inside" ) {
 
       insideEnabled = true;
       insideType = type;
       insideCount = Count;
 
     }
-    else if ( padPosition == "after" ) {
+    else if ( Position == "after" ) {
 
       afterEnabled = true;
       afterType = type;
@@ -584,28 +586,28 @@ int CHBSPassword::setPad ( std::string Position, std::string Type, std::string C
 
 }
 
-std::string CHBSPassword::getPad ( std::string padPosition ) {
+std::string CHBSPassword::getPad ( std::string Position ) {
 
   // Called by get{Before,After,Inside} to use variables
   // to build and return string.
 
-  // Set local variables to value of padPosition variables
+  // Set local variables to value of Position variables
   std::string type = "";
   int Count = 0;
 
-  if ( padPosition == "before" ) {
+  if ( Position == "before" ) {
 
     type = beforeType;
     Count = beforeCount;
 
   }
-  else if ( padPosition == "inside" ) {
+  else if ( Position == "inside" ) {
 
     type = insideType;
     Count = insideCount;
 
   }
-  else if ( padPosition == "after" ) {
+  else if ( Position == "after" ) {
 
     type = afterType;
     Count = afterCount;
@@ -706,7 +708,6 @@ bool CHBSPassword::isValidSeparatorType ( std::string type ) {
   {
 
     // Will use a specified valid separator throughout.
-    std::cout << "HERE" << std::endl; // debug message
     separatorSaved = type;
     return true;
 
