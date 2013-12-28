@@ -36,14 +36,14 @@ class CHBSPassword {
 
     std::string  getPassword();
 
-    int          setWordCount ( std::string wordCount );
+    int          setWordCount ( std::string CountString );
     std::string  getWord();
 
-    int          setSeparator( std::string separatorType, std::string separatorCount );
+    int          setSeparator( std::string Type, std::string CountString );
     std::string  getSeparator();
 
-    int          setPad ( std::string padPosition, std::string padType, std::string padCount);
-    std::string  getPad ( std::string padPosition );
+    int          setPad ( std::string Position, std::string Type, std::string CountString );
+    std::string  getPad ( std::string Position );
 
     std::string  getBefore();
     std::string  getInside();
@@ -69,8 +69,8 @@ class CHBSPassword {
 
     bool         padDefaultsOverridden;
 
-    std::string  convertType ( std::string padType );
-    int          convertCount ( std::string padCount );
+    std::string  convertType ( std::string Type );
+    int          convertCount ( std::string CountString );
     bool         isValidWordCount ( int wordCount );
     bool         isValidSeparatorType ( std::string separatorType );
     bool         isValidSeparatorCount ( int separatorCount );
@@ -392,22 +392,24 @@ std::string CHBSPassword::getPassword() {
 
 }
 
-int CHBSPassword::setWordCount ( std::string Count ) {
+int CHBSPassword::setWordCount ( std::string CountString ) {
 
-  wordCount = atoi(Count.c_str());
+  int Count = convertCount ( CountString );
 
-  if ( wordCount < 0 ) {
+  if ( Count > 0 ) {
+
+    wordCount = Count;
+
+    return 0;
+
+  }
+  else {
 
     std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- w" << std::endl;
     std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 0" << std::endl;
     std::cout << std::endl;
 
     return -1;
-
-  }
-  else {
-
-    return 0;
 
   }
 
@@ -465,9 +467,9 @@ std::vector<std::string> CHBSPassword::buildDictionary () {
 
 }
 
-int CHBSPassword::setSeparator( std::string type, std::string CountString ) {
+int CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
 
-  type = convertType ( type );
+  std::string type = convertType ( Type );
   int Count = convertCount ( CountString );
 
   // Set separator variables
@@ -513,13 +515,13 @@ std::string CHBSPassword::getSeparator() {
 
 }
 
-int CHBSPassword::setPad ( std::string padPosition, std::string padType, std::string padCount ) {
+int CHBSPassword::setPad ( std::string Position, std::string Type, std::string CountString ) {
 
   // Convert padType for validation comparison.
-  std::string type = convertType ( padType );
+  std::string type = convertType ( Type );
 
   // Convert padCount for validation comparison.
-  int Count = convertCount ( padCount );
+  int Count = convertCount ( CountString );
 
   // Validate padType is one of the accepted types
   //   and
@@ -645,14 +647,14 @@ std::string CHBSPassword::getPad ( std::string padPosition ) {
   return pad;
 }
 
-std::string CHBSPassword::convertType ( std::string type ) {
+std::string CHBSPassword::convertType ( std::string Type ) {
 
   // Convert string to upper case string for later
   // comparison in validation function.
 
-  std::transform ( type.begin(), type.end(), type.begin(), ::toupper );
+  std::transform ( Type.begin(), Type.end(), Type.begin(), ::toupper );
 
-  return type;
+  return Type;
 
 }
 
