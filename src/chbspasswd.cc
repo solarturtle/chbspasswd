@@ -51,6 +51,9 @@ class CHBSPassword {
 
   private:
 
+    std::vector<std::string> words;
+    void buildDictionary();
+
     std::string  validPadDigits;
     std::string  validPadSpecialCharacters;
     std::string  validSeparators;
@@ -58,7 +61,6 @@ class CHBSPassword {
     int          wordCount;
     int          wordMinimumLength;
     int          wordMaximumLength;
-    std::vector<std::string> buildDictionary();
 
     std::string  wordCase;
 
@@ -330,6 +332,8 @@ std::string CHBSPassword::getPassword() {
   std::string password = "";
   int Count = wordCount;
 
+  buildDictionary();
+
   // Add a before string if enabled
   if ( beforeEnabled == true ) {
     password += getBefore();
@@ -422,10 +426,6 @@ std::string CHBSPassword::getWord() {
 
   std::string word;
 
-  std::vector<std::string> words;
-
-  words = buildDictionary();
-
   bool accepted = false;
 
   while ( accepted != true ) {
@@ -443,7 +443,7 @@ std::string CHBSPassword::getWord() {
 
 }
 
-std::vector<std::string> CHBSPassword::buildDictionary () {
+void CHBSPassword::buildDictionary () {
 
   // This string has been manually copied from
   // dictionary.txt It is NOT loaded dynamically. I tried
@@ -456,14 +456,10 @@ std::vector<std::string> CHBSPassword::buildDictionary () {
   std::istringstream iss ( dictionary );
 
   std::string word;
-  std::vector<std::string> words;
 
   while ( std::getline ( iss, word, ',' ) ) {
     words.push_back(word);
   }
-
-  // Returns the vector.
-  return words;
 
 }
 
