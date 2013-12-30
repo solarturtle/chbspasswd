@@ -97,7 +97,7 @@ std::vector<std::string> tokenize ( std::string, char );
 
 int main ( int argc, char **argv ) {
 
-  bool DEBUG = true;
+  bool DEBUG = false;
 
   srand( clock() );
 
