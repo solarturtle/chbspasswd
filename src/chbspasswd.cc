@@ -410,7 +410,7 @@ int CHBSPassword::setWordCount ( std::string CountString ) {
   else {
 
     std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- w" << std::endl;
-    std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 0" << std::endl;
+    std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
     std::cout << std::endl;
 
     return -1;
