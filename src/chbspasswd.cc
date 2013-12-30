@@ -97,7 +97,7 @@ std::vector<std::string> tokenize ( std::string, char );
 
 int main ( int argc, char **argv ) {
 
-  bool DEBUG = false;
+  bool DEBUG = true;
 
   srand( clock() );
 
@@ -493,18 +493,32 @@ std::string CHBSPassword::getSeparator() {
 
   if ( separatorEnabled == true ) {
 
+    // If a separator is already saved for reuse, return it.
     if ( separatorSaved != "" ) {
 
       return separatorSaved;
 
     }
 
+    // Loop for the number of separators requested.
     for ( int i = 0; i < Count; i++ ) {
 
-      separator += validSeparators[ rand() % validSeparators.length() ];
+      // If a specific separator is requested, add it.
+      if (validSeparators.find( separatorType ) != std::string::npos) {
+
+          separator += separatorType;
+
+      }
+      // Else, pick a random one to add.
+      else {
+
+          separator += validSeparators[ rand() % validSeparators.length() ];
+
+      } 
 
     }
 
+    // If reusing the same separator is requested, save it.
     if ( separatorType == "S" || separatorType == "SAME" ) {
 
       separatorSaved = separator;
@@ -708,7 +722,6 @@ bool CHBSPassword::isValidSeparatorType ( std::string type ) {
   {
 
     // Will use a specified valid separator throughout.
-    separatorSaved = type;
     return true;
 
   }
