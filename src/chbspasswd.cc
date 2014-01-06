@@ -37,6 +37,7 @@ class CHBSPassword {
     std::string  getPassword();
 
     int          setWordCount ( std::string CountString );
+    int          setWordLength ( std::string minimumString, std::string maximumString );
     std::string  getWord();
 
     int          setSeparator( std::string Type, std::string CountString );
@@ -72,7 +73,8 @@ class CHBSPassword {
     bool         padDefaultsOverridden;
 
     std::string  convertType ( std::string Type );
-    int          convertCount ( std::string CountString );
+    int          convertNumber ( std::string numberString );
+
     bool         isValidWordCount ( int wordCount );
     bool         isValidSeparatorType ( std::string separatorType );
     bool         isValidSeparatorCount ( int separatorCount );
@@ -182,8 +184,7 @@ int main ( int argc, char **argv ) {
 
       arguments = tokenize ( optarg, ',' );
 
-      // thisPassword.wordMinimumLength = atoi ( arguments[0].c_str() );
-      // thisPassword.wordMinimumLength = atoi ( arguments[1].c_str() );
+      thisPassword.setWordLength ( arguments[0], arguments[1] );
 
     }
 
@@ -398,7 +399,7 @@ std::string CHBSPassword::getPassword() {
 
 int CHBSPassword::setWordCount ( std::string CountString ) {
 
-  int Count = convertCount ( CountString );
+  int Count = convertNumber ( CountString );
 
   if ( Count > 0 ) {
 
@@ -411,6 +412,33 @@ int CHBSPassword::setWordCount ( std::string CountString ) {
 
     std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- w" << std::endl;
     std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
+    std::cout << std::endl;
+
+    return -1;
+
+  }
+
+}
+
+int CHBSPassword::setWordLength ( std::string minimumString, std::string maximumString ) {
+
+  int minimum = convertNumber ( minimumString );
+  int maximum = convertNumber ( maximumString );
+
+  if ( minimum > 0 && maximum > minimum ) {
+
+    wordMinimumLength = minimum;
+    wordMaximumLength = maximum;
+
+    return 0;
+
+  }
+  else {
+
+    std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- l" << std::endl;
+    std::cout << "./chbspasswd: argument should be two numbers separated by a comma" << std::endl;
+    std::cout << "./chbspasswd: values should be greater than or equal to 1" << std::endl;
+    std::cout << "./chbspasswd: the minimum length must be less than the maximum length" << std::endl;
     std::cout << std::endl;
 
     return -1;
@@ -466,7 +494,7 @@ void CHBSPassword::buildDictionary () {
 int CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
 
   std::string type = convertType ( Type );
-  int Count = convertCount ( CountString );
+  int Count = convertNumber ( CountString );
 
   // Set separator variables
   if ( isValidSeparatorType ( type ) && Count > 0 ) {
@@ -533,7 +561,7 @@ int CHBSPassword::setPad ( std::string Position, std::string Type, std::string C
   std::string type = convertType ( Type );
 
   // Convert padCount for validation comparison.
-  int Count = convertCount ( CountString );
+  int Count = convertNumber ( CountString );
 
   // Validate padType is one of the accepted types
   //   and
@@ -670,13 +698,13 @@ std::string CHBSPassword::convertType ( std::string Type ) {
 
 }
 
-int CHBSPassword::convertCount ( std::string CountString ) {
+int CHBSPassword::convertNumber ( std::string numberString ) {
 
-  // Convert string padCount to int Count.
+  // Convert a string containing a number into an integer
 
-  int Count = atoi ( CountString.c_str() );
+  int number = atoi ( numberString.c_str() );
 
-  return Count;
+  return number;
 
 }
 
