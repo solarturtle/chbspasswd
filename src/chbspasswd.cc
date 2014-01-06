@@ -34,6 +34,7 @@ class CHBSPassword {
     int   showCHBS();
     int   showDEBUG();
 
+    void buildDictionary();
     std::string  getPassword();
 
     int          setWordCount ( std::string CountString );
@@ -53,11 +54,12 @@ class CHBSPassword {
   private:
 
     std::vector<std::string> words;
-    void buildDictionary();
 
     std::string  validPadDigits;
     std::string  validPadSpecialCharacters;
     std::string  validSeparators;
+    int          validWordMinimumLength;
+    int          validWordMaximumLength;
 
     int          wordCount;
     int          wordMinimumLength;
@@ -107,6 +109,8 @@ int main ( int argc, char **argv ) {
 
   int passwordCount = 1;
   CHBSPassword thisPassword;
+
+  thisPassword.buildDictionary();
 
   int flag;
   std::vector<std::string> arguments;
@@ -284,6 +288,8 @@ CHBSPassword::CHBSPassword() {
   validPadDigits = "0123456789";
   validPadSpecialCharacters = "!@#$%^&*?";
   validSeparators = "~.-_=+:";
+  validWordMinimumLength = 1;
+  validWordMaximumLength = 1;
 
   // Set defaults for password to be similar to:
   // 5.Cool.Mountain.Africa.$
@@ -332,8 +338,6 @@ std::string CHBSPassword::getPassword() {
 
   std::string password = "";
   int Count = wordCount;
-
-  buildDictionary();
 
   // Add a before string if enabled
   if ( beforeEnabled == true ) {
@@ -425,7 +429,13 @@ int CHBSPassword::setWordLength ( std::string minimumString, std::string maximum
   int minimum = convertNumber ( minimumString );
   int maximum = convertNumber ( maximumString );
 
-  if ( minimum > 0 && maximum > minimum ) {
+  // Check to be sure that the requested minimum is less
+  // than the requested maximum and that the lengths are
+  // avaliable in the dictionary.
+
+  if ( minimum <= maximum && 
+       minimum >= validWordMinimumLength && 
+       maximum <= validWordMaximumLength ) {
 
     wordMinimumLength = minimum;
     wordMaximumLength = maximum;
@@ -437,8 +447,9 @@ int CHBSPassword::setWordLength ( std::string minimumString, std::string maximum
 
     std::cout << "./chbspasswd: unexpected argument \"" << optarg << "\" for option -- l" << std::endl;
     std::cout << "./chbspasswd: argument should be two numbers separated by a comma" << std::endl;
-    std::cout << "./chbspasswd: values should be greater than or equal to 1" << std::endl;
-    std::cout << "./chbspasswd: the minimum length must be less than the maximum length" << std::endl;
+    std::cout << "./chbspasswd: the minimum length must be less than or equal to the maximum length" << std::endl;
+    std::cout << "./chbspasswd: the minimum length must be greater than or equal to: " << validWordMinimumLength << std::endl;
+    std::cout << "./chbspasswd: the maximum length must be less than or equal to: " << validWordMaximumLength << std::endl;
     std::cout << std::endl;
 
     return -1;
@@ -486,7 +497,27 @@ void CHBSPassword::buildDictionary () {
   std::string word;
 
   while ( std::getline ( iss, word, ',' ) ) {
+
+    // Watch for words that are shorter than the current
+    // minimum length allowed
+
+    if ( word.length() < validWordMinimumLength ) {
+
+      validWordMinimumLength = word.length();
+
+    }
+
+    // Watch for words that are longer than the current
+    // maximum length allowed
+
+    if ( word.length() > validWordMaximumLength ) {
+
+      validWordMaximumLength = word.length();
+
+    }
+
     words.push_back(word);
+
   }
 
 }
@@ -893,7 +924,9 @@ int CHBSPassword::showDEBUG() {
 
   std::cout << std::endl;
   std::cout << "wordCount: " << wordCount << std::endl;
+  std::cout << "validWordMinimumLength: " << validWordMinimumLength << std::endl;
   std::cout << "wordMinimumLength: " << wordMinimumLength << std::endl;
+  std::cout << "validWordMaximumLength: " << validWordMaximumLength << std::endl;
   std::cout << "wordMaximumLength: " << wordMaximumLength << std::endl;
   std::cout << std::endl;
   std::cout << "validSeparators: " << validSeparators << std::endl;
