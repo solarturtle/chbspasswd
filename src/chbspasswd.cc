@@ -115,7 +115,7 @@ int main ( int argc, char **argv ) {
   int flag;
   std::vector<std::string> arguments;
 
-  while ( ( flag = getopt ( argc, argv, "a:b:c:ehi:l:n:s:u:vw:x" ) ) != EOF ) {
+  while ( ( flag = getopt ( argc, argv, "a:b:c:hi:l:n:s:u:vw:x" ) ) != EOF ) {
 
     if ( flag == 'a' ) {
 
@@ -151,13 +151,14 @@ int main ( int argc, char **argv ) {
 
     }
 
-    else if ( flag == 'e' ) {
-
-      // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
-
-      // thisPassword.eleetEnabled = true;
-
-    }
+// Planned implementation in v0.2
+//    else if ( flag == 'e' ) {
+//
+//      // eleet - Make 1337sp3@k substitutions: a=@, e=3, i=!, l=1, o=0, and t=7.
+//
+//      // thisPassword.eleetEnabled = true;
+//
+//    }
 
     else if ( flag == 'h' ) {
 
