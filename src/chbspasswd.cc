@@ -82,6 +82,7 @@ class CHBSPassword {
     bool         isValidWordCase ( std::string caseType );
     bool         isValidSeparatorType ( std::string separatorType );
     bool         isValidSeparatorCount ( int separatorCount );
+
     bool         isValidPadType ( std::string padType );
     bool         isValidPadCount ( int padCount );
 
@@ -598,8 +599,13 @@ int CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
   std::string type = convertType ( Type );
   int Count = convertNumber ( CountString );
 
-  // Set separator variables
-  if ( isValidSeparatorType ( type ) && Count > 0 ) {
+  // Validate separatorType is one of the accepted types
+  //   and
+  // Validate separatorCount is within minimum to maximum length range
+
+  if ( isValidSeparatorType ( type ) 
+         && 
+       isValidSeparatorCount ( Count ) ) {
 
     separatorEnabled = true;
     separatorType = type;
@@ -911,6 +917,24 @@ bool CHBSPassword::isValidSeparatorType ( std::string type ) {
 
     return false;
 
+  }
+
+}
+
+bool CHBSPassword::isValidSeparatorCount ( int separatorCount ) {
+
+  if ( separatorCount > 0 ) {
+
+    return true;
+
+  }
+  else {
+
+    std::cout << "./chbspasswd: unexpected second argument for option -- s" << std::endl;
+    std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
+    std::cout << std::endl;
+
+    return false;
   }
 
 }
