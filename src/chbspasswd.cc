@@ -38,6 +38,8 @@ class CHBSPassword {
     std::string  getPassword();
 
     int          setWordCount ( std::string CountString );
+    int          setWordCase ( std::string Type );
+    std::string  applyWordCase ( std::string Word );
     int          setWordLength ( std::string minimumString, std::string maximumString );
     std::string  getWord();
 
@@ -62,10 +64,9 @@ class CHBSPassword {
     int          validWordMaximumLength;
 
     int          wordCount;
+    std::string  wordCase;
     int          wordMinimumLength;
     int          wordMaximumLength;
-
-    std::string  wordCase;
 
     bool         separatorEnabled;
     std::string  separatorType;
@@ -78,6 +79,7 @@ class CHBSPassword {
     int          convertNumber ( std::string numberString );
 
     bool         isValidWordCount ( int wordCount );
+    bool         isValidWordCase ( std::string caseType );
     bool         isValidSeparatorType ( std::string separatorType );
     bool         isValidSeparatorCount ( int separatorCount );
     bool         isValidPadType ( std::string padType );
@@ -145,9 +147,7 @@ int main ( int argc, char **argv ) {
 
       // case - Modify the words to be upper, lower, initial, or mixed case 
 
-      std::string caseType = optarg;
-
-      // thisPassword.wordCase = caseType;
+      thisPassword.setWordCase ( optarg );
 
     }
 
@@ -425,6 +425,74 @@ int CHBSPassword::setWordCount ( std::string CountString ) {
 
 }
 
+int CHBSPassword::setWordCase ( std::string CASE ) {
+
+  // "case" is a c++ reserved word, so using "CASE" and "Case" against
+  // convention.
+
+  // Standardize input for validation
+  std::string Case = convertType ( CASE );
+
+  // Validate input against defined word case types and set if it matches.
+  if ( isValidWordCase ( Case ) ) {
+
+    wordCase = Case;
+
+    return 0;
+
+  }
+  else {
+
+    return -1;
+
+  }
+
+}
+
+std::string CHBSPassword::applyWordCase ( std::string Word ) {
+
+  if ( wordCase == "I" || wordCase == "INITIAL" ) {
+
+    // Set initial letter of each word to be upper case.
+    Word[0] = toupper ( Word[0] );
+
+  }
+  else if ( wordCase == "U" || wordCase == "UPPER" ) {
+
+    // Set all letters of each word to be upper case.
+    std::transform(Word.begin(), Word.end(),Word.begin(), ::toupper);
+
+  }
+  else if ( wordCase == "L" || wordCase == "LOWER" ) {
+
+    // Set all letters of each word to be lower case.
+    std::transform(Word.begin(), Word.end(),Word.begin(), ::tolower);
+
+  }
+  else if ( wordCase == "M" || wordCase == "MIXED" ) {
+
+    // Flip a coin and if heads change letter to be upper case.
+    for ( int i = 0; i < Word.length(); i++ ) {
+
+      if ( rand() % 2 == 1 ) {
+
+        Word[i] = toupper ( Word[i] );
+
+      }
+
+    }
+
+  }
+  else if ( wordCase == "S" || wordCase == "SAME" ) {
+
+    // Do nothing return the word from the dictionary as is.
+
+  }
+
+  return Word;
+
+}
+
 int CHBSPassword::setWordLength ( std::string minimumString, std::string maximumString ) {
 
   int minimum = convertNumber ( minimumString );
@@ -477,6 +545,8 @@ std::string CHBSPassword::getWord() {
       accepted = true;
 
     }
+
+    word = applyWordCase ( word );
   }
 
   return word;
@@ -758,6 +828,52 @@ bool CHBSPassword::isValidWordCount ( int wordCount ) {
 
 }
 
+bool CHBSPassword::isValidWordCase ( std::string caseType ) {
+
+  if ( caseType == "I" || caseType == "INITIAL" ) {
+
+    // Set initial letter of each word to be upper case.
+    return true;
+
+  }
+  else if ( caseType == "U" || caseType == "UPPER" ) {
+
+    // Set all letters of each word to be upper case.
+    return true;
+
+  }
+  else if ( caseType == "L" || caseType == "LOWER" ) {
+
+    // Set all letters of each word to be lower case.
+    return true;
+
+  }
+  else if ( caseType == "M" || caseType == "MIXED" ) {
+
+    // Randomly change each letter to upper or lower case.
+    return true;
+
+  }
+  else if ( caseType == "S" || caseType == "SAME" ) {
+
+    // Do nothing return the word from the dictionary as is.
+    return true;
+
+  }
+  else {
+
+    // invalid argument
+    std::cout << "./chbspasswd: unexpected argument \"" << caseType << "\" for option -- c" << std::endl;
+    std::cout << "./chbspasswd: argument must be either: I (or INITIAL), U (or UPPER)," << std::endl;
+    std::cout << "              L (or LOWER), or S (or SAME) for same as in the dictionary." << std::endl;
+    std::cout << std::endl;
+
+    return false;
+
+  }
+
+}
+
 bool CHBSPassword::isValidSeparatorType ( std::string type ) {
 
   if ( type == "S" || type == "SAME" ) {
@@ -925,6 +1041,7 @@ int CHBSPassword::showDEBUG() {
 
   std::cout << std::endl;
   std::cout << "wordCount: " << wordCount << std::endl;
+  std::cout << "wordCase: " << wordCase << std::endl;
   std::cout << "validWordMinimumLength: " << validWordMinimumLength << std::endl;
   std::cout << "wordMinimumLength: " << wordMinimumLength << std::endl;
   std::cout << "validWordMaximumLength: " << validWordMaximumLength << std::endl;
