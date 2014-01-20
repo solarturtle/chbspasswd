@@ -1028,7 +1028,7 @@ int CHBSPassword::showHelp() {
       std::cout << "|" << validSeparators[i];
     }
   std::cout << "},numberOfCharacters ]" << std::endl;
-  std::cout << "                  [ -{a|b|c} {DIGITS|SPECIAL|MIXED},numberOfCharacters ]" << std::endl;
+  std::cout << "                  [ -{a|b|i} {DIGITS|SPECIAL|MIXED},numberOfCharacters ]" << std::endl;
   std::cout << "                  [ -n numberOfPasswordsToGenerate ]" << std::endl;
   std::cout << std::endl;
   std::cout << "For more detailed information: man chbspasswd" << std::endl;
