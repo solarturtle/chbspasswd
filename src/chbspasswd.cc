@@ -294,8 +294,8 @@ CHBSPassword::CHBSPassword() {
   validWordMaximumLength = 1;
 
   // Set defaults for password to be similar to:
-  // CoolMountainAfrica
-  wordCount = 3;
+  // AlsoCaptainHasParallel
+  wordCount = 4;
   wordMinimumLength = 3;
   wordMaximumLength = 8;
 
