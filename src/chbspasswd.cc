@@ -108,7 +108,7 @@ int main ( int argc, char **argv ) {
 
   bool DEBUG = false;
 
-  srand( clock() );
+  srand( (unsigned int) clock() );
 
   int passwordCount = 1;
   CHBSPassword thisPassword;
@@ -575,7 +575,7 @@ void CHBSPassword::buildDictionary () {
 
     if ( word.length() < validWordMinimumLength ) {
 
-      validWordMinimumLength = word.length();
+      validWordMinimumLength = (unsigned int) word.length();
 
     }
 
@@ -584,7 +584,7 @@ void CHBSPassword::buildDictionary () {
 
     if ( word.length() > validWordMaximumLength ) {
 
-      validWordMaximumLength = word.length();
+      validWordMaximumLength = (unsigned int) word.length();
 
     }
 
