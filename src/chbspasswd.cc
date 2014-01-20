@@ -37,16 +37,16 @@ class CHBSPassword {
     void buildDictionary();
     std::string  getPassword();
 
-    int          setWordCount ( std::string CountString );
-    int          setWordCase ( std::string Type );
+    void         setWordCount ( std::string CountString );
+    void         setWordCase ( std::string Type );
     std::string  applyWordCase ( std::string Word );
-    int          setWordLength ( std::string minimumString, std::string maximumString );
+    void         setWordLength ( std::string minimumString, std::string maximumString );
     std::string  getWord();
 
-    int          setSeparator( std::string Type, std::string CountString );
+    void         setSeparator( std::string Type, std::string CountString );
     std::string  getSeparator();
 
-    int          setPad ( std::string Position, std::string Type, std::string CountString );
+    void         setPad ( std::string Position, std::string Type, std::string CountString );
     std::string  getPad ( std::string Position );
 
     std::string  getBefore();
@@ -294,7 +294,7 @@ CHBSPassword::CHBSPassword() {
   validWordMaximumLength = 1;
 
   // Set defaults for password to be similar to:
-  // 5.Cool.Mountain.Africa.$
+  // CoolMountainAfrica
   wordCount = 3;
   wordMinimumLength = 3;
   wordMaximumLength = 8;
@@ -403,15 +403,13 @@ std::string CHBSPassword::getPassword() {
 
 }
 
-int CHBSPassword::setWordCount ( std::string CountString ) {
+void CHBSPassword::setWordCount ( std::string CountString ) {
 
   int Count = convertNumber ( CountString );
 
   if ( Count > 0 ) {
 
     wordCount = Count;
-
-    return 0;
 
   }
   else {
@@ -420,13 +418,13 @@ int CHBSPassword::setWordCount ( std::string CountString ) {
     std::cout << "./chbspasswd: argument must be a number with a value greater than or equal to 1" << std::endl;
     std::cout << std::endl;
 
-    return -1;
+    exit(0);
 
   }
 
 }
 
-int CHBSPassword::setWordCase ( std::string CASE ) {
+void CHBSPassword::setWordCase ( std::string CASE ) {
 
   // "case" is a c++ reserved word, so using "CASE" and "Case" against
   // convention.
@@ -439,12 +437,10 @@ int CHBSPassword::setWordCase ( std::string CASE ) {
 
     wordCase = Case;
 
-    return 0;
-
   }
   else {
 
-    return -1;
+    exit(0);
 
   }
 
@@ -494,7 +490,7 @@ std::string CHBSPassword::applyWordCase ( std::string Word ) {
 
 }
 
-int CHBSPassword::setWordLength ( std::string minimumString, std::string maximumString ) {
+void CHBSPassword::setWordLength ( std::string minimumString, std::string maximumString ) {
 
   int minimum = convertNumber ( minimumString );
   int maximum = convertNumber ( maximumString );
@@ -503,14 +499,10 @@ int CHBSPassword::setWordLength ( std::string minimumString, std::string maximum
   // than the requested maximum and that the lengths are
   // avaliable in the dictionary.
 
-  if ( minimum <= maximum && 
-       minimum >= validWordMinimumLength && 
-       maximum <= validWordMaximumLength ) {
+  if ( minimum <= maximum && minimum >= validWordMinimumLength && maximum <= validWordMaximumLength ) {
 
     wordMinimumLength = minimum;
     wordMaximumLength = maximum;
-
-    return 0;
 
   }
   else {
@@ -522,7 +514,7 @@ int CHBSPassword::setWordLength ( std::string minimumString, std::string maximum
     std::cout << "./chbspasswd: the maximum length must be less than or equal to: " << validWordMaximumLength << std::endl;
     std::cout << std::endl;
 
-    return -1;
+    exit(0);
 
   }
 
@@ -594,7 +586,7 @@ void CHBSPassword::buildDictionary () {
 
 }
 
-int CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
+void CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
 
   std::string type = convertType ( Type );
   int Count = convertNumber ( CountString );
@@ -603,13 +595,16 @@ int CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
   //   and
   // Validate separatorCount is within minimum to maximum length range
 
-  if ( isValidSeparatorType ( type )
-         &&
-       isValidSeparatorCount ( Count ) ) {
+  if ( isValidSeparatorType ( type ) && isValidSeparatorCount ( Count ) ) {
 
     separatorEnabled = true;
     separatorType = type;
     separatorCount = Count;
+
+  }
+  else {
+
+    exit(0);
 
   }
 
@@ -663,7 +658,7 @@ std::string CHBSPassword::getSeparator() {
 
 }
 
-int CHBSPassword::setPad ( std::string Position, std::string Type, std::string CountString ) {
+void CHBSPassword::setPad ( std::string Position, std::string Type, std::string CountString ) {
 
   // Convert padType for validation comparison.
   std::string type = convertType ( Type );
@@ -675,9 +670,7 @@ int CHBSPassword::setPad ( std::string Position, std::string Type, std::string C
   //   and
   // Validate padCount is within minimum to maximum length range
 
-  if ( isValidPadType ( type )
-         &&
-       isValidPadCount ( Count ) ) {
+  if ( isValidPadType ( type ) && isValidPadCount ( Count ) ) {
 
     // If the default pad options are not yet overriden,
     // set each enabled to false and then set overriden to
@@ -717,18 +710,16 @@ int CHBSPassword::setPad ( std::string Position, std::string Type, std::string C
     }
     else {
 
-      return -1;
+      exit(0);
 
     }
 
   }
   else {
 
-    return -1;
+    exit(0);
 
   }
-
-  return 0;
 
 }
 
@@ -759,7 +750,7 @@ std::string CHBSPassword::getPad ( std::string Position ) {
     Count = afterCount;
 
   }
- 
+
   // Set validCharacters to include requested character
   // sets
   std::string validCharacters = "";
@@ -936,6 +927,7 @@ bool CHBSPassword::isValidSeparatorCount ( int separatorCount ) {
     std::cout << std::endl;
 
     return false;
+
   }
 
 }
@@ -946,16 +938,19 @@ bool CHBSPassword::isValidPadType ( std::string padType ) {
 
     // Using Pad of Digits
     return true;
+
   }
   else if ( padType == "S" || padType == "SPECIAL" ) {
 
     // Using Pad of Special Characters
     return true;
+
   }
   else if ( padType == "M" || padType == "MIXED" ) {
 
     // Using Pad of Mixed Digits and Special Characters
     return true;
+
   }
   else {
 
@@ -984,6 +979,7 @@ bool CHBSPassword::isValidPadCount ( int padCount ) {
     std::cout << std::endl;
 
     return false;
+
   }
 
 }
@@ -1095,6 +1091,8 @@ int CHBSPassword::showDEBUG() {
   std::cout << std::endl;
   std::cout << "eleetEnabled: " << eleetEnabled << std::endl;
   std::cout << std::endl;
+
+  return 0;
 
 }
 
