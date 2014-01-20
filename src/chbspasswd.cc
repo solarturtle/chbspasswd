@@ -899,12 +899,12 @@ bool CHBSPassword::isValidSeparatorType ( std::string type ) {
 
     // invalid argument
     std::cout << "./chbspasswd: unexpected first argument \"" << type << "\" for option -- s" << std::endl;
-    std::cout << "./chbspasswd: argument must be either: S (or SAME), R (or RANDOM),";
-    std::cout << std::endl;
+    std::cout << "./chbspasswd: argument must be either: S (or SAME), R (or RANDOM)," << std::endl;
     std::cout << "              or one of these valid separators:";
     for ( int i = 0; i <= validSeparators.length(); i++ ) { 
       std::cout << " " << validSeparators[i] << "";
     }
+    std::cout << std::endl;
     std::cout << std::endl;
 
     return false;
@@ -956,7 +956,8 @@ bool CHBSPassword::isValidPadType ( std::string padType ) {
 
     // invalid argument
     std::cout << "./chbspasswd: unexpected first argument \"" << padType << "\" for option -- b, i, or a" << std::endl;
-    std::cout << "./chbspasswd: argument must be either: D (or DIGITS), S (or SPECIAL), or M (or MIXED)";
+    std::cout << "./chbspasswd: argument must be either: D (or DIGITS), S (or SPECIAL)," << std::endl;
+    std::cout << "              or M (or MIXED)" << std::endl;
     std::cout << std::endl;
 
     return false;
