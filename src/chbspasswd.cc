@@ -603,8 +603,8 @@ int CHBSPassword::setSeparator( std::string Type, std::string CountString ) {
   //   and
   // Validate separatorCount is within minimum to maximum length range
 
-  if ( isValidSeparatorType ( type ) 
-         && 
+  if ( isValidSeparatorType ( type )
+         &&
        isValidSeparatorCount ( Count ) ) {
 
     separatorEnabled = true;
@@ -896,7 +896,8 @@ bool CHBSPassword::isValidSeparatorType ( std::string type ) {
     return true;
 
   }
-  else if (validSeparators.find( type ) != std::string::npos)
+  // If the type string is not empty, try to find it in the list of valid separators.
+  else if ( type != "" && validSeparators.find( type ) != std::string::npos )
   {
 
     // Will use a specified valid separator throughout.
