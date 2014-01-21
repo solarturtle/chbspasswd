@@ -30,21 +30,76 @@
 .SH NAME
 chbspasswd \- generates a password which is easy to remember and hard to guess
 .SH SYNOPSIS
-.B chbspasswd [Options] [ -o
-.I output-file
-.B ]
+.B chbspasswd [-a type,count] [-b type,count] [-c type] [-h] [-i type,count] [-l minimumLength,maximumLength] [-n count] [-s type,count] [-w count] [-x]
 .SH DESCRIPTION
 .B chbspasswd
 is a password generator inspired by XKCD 936: Password Strength and xkpasswd.net. It can generate a customized password that is easy to remember and hard to guess.
 .SH OPTIONS
+.IP -a
+type,count
+.br
+Specify the type and count of a pad to be placed AFTER the words in a password. The type should be either: D (or DIGITS), S (or SPECIAL), or M (or MIXED). The count should be a number with a value greater than or equal to 1.
+
+Specifying DIGITS will include count single numerical digits. SPECIAL will include count special characters. MIXED will include a count of mixed digits and special characters.
+.IP -b
+type,count
+.br
+Specify the type and count of a pad to be placed BEFORE the words in a password. The type should be either: D (or DIGITS), S (or SPECIAL), or M (or MIXED). The count should be a number with a value greater than or equal to 1.
+
+Specifying DIGITS will include count single numerical digits. SPECIAL will include count special characters. MIXED will include a count of mixed digits and special characters.
+.IP -c
+type
+.br
+Specify the type of capitalization to be used. The type should be either: I (or INITIAL), U (or UPPER), L (or LOWER), M (or MIXED), or S (or SAME).
+
+Specifying INITIAL will return words with the first letter in uppercase. UPPER will return words with all letters in uppercase. LOWER will return words with all letters in lowercase. MIXED will return words with mixed case. SAME will return words with the same capitialization as stored in the dictionary.
+.IP -h
+Print a help message and exit.
+.IP -i
+type,count
+.br
+Specify the type and count of pads to be placed INSIDE between the words in a password. The type should be either: D (or DIGITS), S (or SPECIAL), or M (or MIXED). The count should be a number with a value greater than or equal to 1.
+
+Specifying DIGITS will include count single numerical digits. SPECIAL will include count special characters. MIXED will include a count of mixed digits and special characters.
+.IP -l
+minimumLength,maximumLength
+.br
+Specify the minimum and maximum length of words to be selected from the dictionary.
+.IP -n
+count
+.br
+Specify the number of passwords to create.
+.IP -s
+type,count
+.br
+Specify the type and count of separators to be placed between the words and pads in a password. The type should be either: S (or SAME), R (or RANDOM), or one of these valid separators: ~ . - _ = + :. The count should be a number with a value greater than or equal to 1.
+
+Specifying SAME will use the same separator of count characters between each word and pad. RANDOM will use a random separator of count characters between each word and pad. A specific valid separator will be used count times.
+.IP -w
+count
+.br
+Specify the number of words to use in each password.
 .IP -x
 Override all other options and return a well known password that you have already memorized.
 .B ;-)
-.SH FILES
-.I ~/.chbspasswdrc
-.RS
-Per user configuration file. See
-.BR chbspasswd (5)
-for further details.
+.\" Implementation planned for v0.2
+.\".SH FILES
+.\".I ~/.chbspasswdrc
+.\".RS
+.\"Per user configuration file. See
+.\".BR chbspasswd (5)
+.\"for further details.
+.SH EXAMPLES
+$ chbspasswd
+.br
+MilkNightSuddenlyDriver
+.P
+$ chbspasswd -w 3 -s .,1
+.br
+Parent.Brief.Central
+.P
+$ chbspasswd -w 2 -b d,1 -s .,1 -i m,2 -a s,1
+.br
+8.Special.^3.Frozen.#
 .SH AUTHOR
 Charles H. Leggett <charles@solarturtle.net>

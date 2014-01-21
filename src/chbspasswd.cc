@@ -862,7 +862,7 @@ bool CHBSPassword::isValidWordCase ( std::string caseType ) {
     // invalid argument
     std::cout << "./chbspasswd: unexpected argument \"" << caseType << "\" for option -- c" << std::endl;
     std::cout << "./chbspasswd: argument must be either: I (or INITIAL), U (or UPPER)," << std::endl;
-    std::cout << "              L (or LOWER), or S (or SAME) for same as in the dictionary." << std::endl;
+    std::cout << "              L (or LOWER), M (or MIXED), or S (or SAME)." << std::endl;
     std::cout << std::endl;
 
     return false;
