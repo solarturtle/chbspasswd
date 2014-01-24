@@ -3083,7 +3083,6 @@ fi
 
 
 
-AX_CXX_COMPILE_STDCXX_11
 ac_config_files="$ac_config_files Makefile"
 
 cat >confcache <<\_ACEOF
