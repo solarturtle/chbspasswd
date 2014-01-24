@@ -4,3 +4,4 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 bin_PROGRAMS = bin/chbspasswd
 bin_chbspasswd_SOURCES = src/chbspasswd.cc
 man_MANS = man/chbspasswd.1 man/chbspasswd.5
+dist_man_MANS = man/chbspasswd.1 man/chbspasswd.5
