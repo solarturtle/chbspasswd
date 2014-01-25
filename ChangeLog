@@ -1,1 +1,5 @@
+2014.01.25: v0.1.1
+
+- Changed headers to sucessfully build on Linux (Ubuntu 13.10)
+
 2014.01.24: Initial release v0.1

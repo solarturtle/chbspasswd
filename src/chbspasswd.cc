@@ -21,7 +21,10 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <GetOpt.h>
+#include <algorithm>
+#include <cstdlib>
+#include <stdio.h>
+#include <unistd.h>
 
 class CHBSPassword {
 
