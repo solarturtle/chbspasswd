@@ -22,10 +22,16 @@
 #include <sstream>
 #include <algorithm>
 #include <stdlib.h>
+#include <sys/time.h>
 
 // BEGIN: CHBSPassword PUBLIC
 
 CHBSPassword::CHBSPassword() {
+
+  // Seed the pseudo-random number generator.
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  srandom (tv.tv_sec * tv.tv_usec);
 
   // Define valid character type values
   validPadDigits = "0123456789";
@@ -414,7 +420,7 @@ std::string CHBSPassword::getWord() {
   while ( accepted != true ) {
 
     // Select a random word from within the "words" vector.
-    word = words[ rand() % words.size() ];
+    word = words[ random() % words.size() ];
 
     // If the word is within the bounds of the min and max length, set accepted
     // to indicate we have found an acceptable password.
@@ -461,7 +467,7 @@ std::string CHBSPassword::applyWordCase ( std::string Word ) {
     // Flip a coin and if heads change letter to be upper case.
     for ( int i = 0; i < Word.length(); i++ ) {
 
-      if ( rand() % 2 == 1 ) {
+      if ( random() % 2 == 1 ) {
 
         Word[i] = toupper ( Word[i] );
 
@@ -517,7 +523,7 @@ std::string CHBSPassword::getSeparator() {
       // Else, pick a random one to add.
       else {
 
-          separator += validSeparators[ rand() % validSeparators.length() ];
+          separator += validSeparators[ random() % validSeparators.length() ];
 
       } 
 
@@ -592,7 +598,7 @@ std::string CHBSPassword::getPad ( std::string Position ) {
   std::string pad = "";
 
   for ( int i = 0; i < Count; i++ ) {
-    pad += validCharacters[ rand() % validCharacters.length() ];
+    pad += validCharacters[ random() % validCharacters.length() ];
   }
 
   return pad;

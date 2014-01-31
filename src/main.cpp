@@ -36,9 +36,6 @@ int main ( int argc, char **argv ) {
   // Enable or disable debugging called later with showDEBUG();
   bool DEBUG = false;
 
-  // Seed the pseudo-random number generator.
-  srand( (unsigned int) clock() );
-
   int passwordCount = 1;
   CHBSPassword thisPassword;
 

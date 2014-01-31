@@ -1,5 +1,8 @@
+	- Squashed major bug that caused the program to return the same password
+		every time on Linux systems.
+
 2014.01.25: v0.1.1
 
-- Changed headers to sucessfully build on Linux (Ubuntu 13.10)
+	- Changed headers to sucessfully build on Linux (Ubuntu 13.10)
 
 2014.01.24: Initial release v0.1
