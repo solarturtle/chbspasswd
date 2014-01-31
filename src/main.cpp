@@ -1,4 +1,4 @@
-// chbspasswd v0.2 - main.cpp
+// chbspasswd v0.1.2 - main.cpp
 //
 // A password generator inspired by XKCD 936: Password Strength and xkpasswd.net
 //
@@ -231,7 +231,7 @@ void showVersion() {
 
   // version - Display a message with version information 
 
-  std::cout << "chbspasswd v0.2" << std::endl;
+  std::cout << "chbspasswd v0.1.2" << std::endl;
 
 }
 

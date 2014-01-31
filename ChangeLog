@@ -1,5 +1,8 @@
+2014.01.30: v0.1.2
+
 	- Squashed major bug that caused the program to return the same password
-		every time on Linux systems.
+		every time on Linux systems
+	- Significant changes under the hood to reorganize source files
 
 2014.01.25: v0.1.1
 
