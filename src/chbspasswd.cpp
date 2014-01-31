@@ -1,4 +1,4 @@
-// chbspasswd v0.1.2 - chbspasswd.cpp
+// chbspasswd v0.2 - chbspasswd.cpp
 //
 // A password generator inspired by XKCD 936: Password Strength and xkpasswd.net
 //
