@@ -7,6 +7,7 @@ To use chbspasswd download and install the latest [release](https://github.com/s
 
 If you use Homebrew, installation is even easier:
 > brew tap solarturtle/solarturtle
+>
 > brew install chbspasswd
 
 Next, you should read (or at least skim) the documentation:
