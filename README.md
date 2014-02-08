@@ -3,6 +3,24 @@ chbspasswd
 
 A password generator inspired by XKCD 936: Password Strength and xkpasswd.net
 
+To use chbspasswd download and install the latest [release](https://github.com/solarturtle/chbspasswd/releases).
+
+If you use Homebrew, installation is even easier:
+> brew tap solarturtle/solarturtle
+> brew install chbspasswd
+
+Next, you should read (or at least skim) the documentation:
+> man chbspasswd
+
+The password generator is very customizable, you use command line flags to specify:
+* the number of words to use 
+* a seperator to be used between words
+* a pad to be placed before, inside between words, and/or after the words
+* a minimum and maximum word length
+* the case to use within the words
+* a count of passwords to generate
+* and a couple of other options
+
 Copyright (C) 2013-2014, Charles H. Leggett
 
 This program is free software: you can redistribute it and/or modify
