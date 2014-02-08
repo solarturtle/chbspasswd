@@ -31,20 +31,102 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-<p>Copyright (C) 2013-2014, Charles H. Leggett</p>
+        <h2>Install</h2>
 
-<p>This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.</p>
+        <p>To use chbspasswd download and install the latest <a href="https://github.com/solarturtle/chbspasswd/releases">release</a>.</p>
 
-<p>This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.</p>
+        <p>If you use Homebrew, installation is even easier:</p>
 
-<p>You should have received a copy of the GNU General Public License
-along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+        <blockquote>
+          <p>$ brew tap solarturtle/solarturtle <br />
+        $ brew install chbspasswd  </p>
+        </blockquote>
+
+        <h2>Learn</h2>
+
+        <p>Next, you should read (or at least skim) the documentation:</p>
+
+        <blockquote>
+          <p>$ man chbspasswd  </p>
+        </blockquote>
+
+        <p>The password generator is very customizable, you use command line flags to specify:</p>
+
+        <ul>
+        <li>the number of words to use </li>
+        <li>a seperator to be used between words </li>
+        <li>a pad to be placed before, inside between words, and/or after the words </li>
+        <li>a minimum and maximum word length </li>
+        <li>the case to use within the words </li>
+        <li>a count of passwords to generate </li>
+        <li>and a couple of other options </li>
+        </ul>
+
+        <p>The default is 4 words:</p>
+
+        <blockquote>
+          <p>$ chbspasswd <br />
+        ThirdNounForestSwim  </p>
+        </blockquote>
+
+        <p>Now lets add some options:</p>
+
+        <blockquote>
+          <p>$ chbspasswd -w 3 -b d,1 -a s,2 <br />
+        9LearnRemainDon&amp;$  </p>
+        </blockquote>
+
+        <p>To seperate the words with a dot:</p>
+
+        <blockquote>
+          <p>$ chbspasswd -w 4 -s .,1 <br />
+        West.Twenty.Cookies.Trade  </p>
+        </blockquote>
+
+        <p>To seperate the words with random characters:</p>
+
+        <blockquote>
+          <p>$ chbspasswd -s r,1 <br />
+        Shoe-Toward=Jack+Water  </p>
+        </blockquote>
+
+        <p>To generate several passwords at a time:</p>
+
+        <blockquote>
+          <p>$ chbspasswd -w 3 -b d,1 -a s,1 -n 5 <br />
+        8ChairOrbitVictory&amp; <br />
+        7EasyGradeCreature$ <br />
+        1ServiceTownBeing% <br />
+        1LabelHistoryGermany? <br />
+        4CannotStuckOld$  </p>
+        </blockquote>
+
+        <h2>Use</h2>
+
+        <p>There are, of course, many other combinations that can be used to
+        customize the password to your preference.</p>
+
+        <p>If you catch a bug or have a feature request, file an
+        <a href="https://github.com/solarturtle/chbspasswd/issues">issue</a>.</p>
+
+        <hr />
+
+        <blockquote>
+          <p>Copyright (C) 2013-2014, Charles H. Leggett</p>
+
+        <p>This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.</p>
+
+        <p>This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.</p>
+
+        <p>You should have received a copy of the GNU General Public License
+        along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+        </blockquote>
       </section>
     </div>
 
