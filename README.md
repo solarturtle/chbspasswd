@@ -1,16 +1,17 @@
 chbspasswd
 ==========
 
-## A password generator inspired by XKCD 936: Password Strength and xkpasswd.net
+A password generator inspired by XKCD 936: Password Strength and xkpasswd.net
 
-### Install
+## Install
+
 To use chbspasswd download and install the latest [release](https://github.com/solarturtle/chbspasswd/releases).
 
 If you use Homebrew, installation is even easier:
 > $ brew tap solarturtle/solarturtle  
 > $ brew install chbspasswd  
 
-### Learn
+## Learn
 
 Next, you should read (or at least skim) the documentation:
 > $ man chbspasswd  
@@ -53,7 +54,7 @@ To generate several passwords at a time:
 > 1LabelHistoryGermany?  
 > 4CannotStuckOld$  
 
-### Use
+## Use
 
 There are, of course, many other combinations that can be used to
 customize the password to your preference.
