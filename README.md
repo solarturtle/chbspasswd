@@ -33,7 +33,7 @@ The default is 4 words:
 Now lets add some options:
 
 > $ chbspasswd -w 3 -b d,1 -a s,2  
-> 9LearnRemainDon*$  
+> 9LearnRemainDon&$  
 
 To seperate the words with a dot:
 
@@ -49,8 +49,8 @@ To generate several passwords at a time:
 
 > $ chbspasswd -w 3 -b d,1 -a s,1 -n 5  
 > 8ChairOrbitVictory&  
-> 7EasyGradeCreature*  
-> 1ServiceTownBeing*  
+> 7EasyGradeCreature$  
+> 1ServiceTownBeing%  
 > 1LabelHistoryGermany?  
 > 4CannotStuckOld$  
 
