@@ -11,7 +11,7 @@
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -120,7 +120,7 @@ void CHBSPassword::buildDictionary () {
 
 int CHBSPassword::showDEBUG() {
 
-  // DEBUG - Display a message with debugging information 
+  // DEBUG - Display a message with debugging information
 
   std::cout << std::endl;
   std::cout << "wordCount: " << wordCount << std::endl;
@@ -525,7 +525,7 @@ std::string CHBSPassword::getSeparator() {
 
           separator += validSeparators[ random() % validSeparators.length() ];
 
-      } 
+      }
 
     }
 
@@ -734,7 +734,7 @@ bool CHBSPassword::isValidSeparatorType ( std::string type ) {
     std::cout << "./chbspasswd: argument must be either: S (or SAME), R (or RANDOM)," << std::endl;
     std::cout << "              or one of these valid separators:";
     // Print a list of the valid separators.
-    for ( int i = 0; i <= validSeparators.length(); i++ ) { 
+    for ( int i = 0; i <= validSeparators.length(); i++ ) {
       std::cout << " " << validSeparators[i] << "";
     }
     std::cout << std::endl;

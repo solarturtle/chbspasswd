@@ -11,7 +11,7 @@
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -77,7 +77,7 @@ int main ( int argc, char **argv ) {
 
     else if ( flag == 'c' ) {
 
-      // case - Modify the words to be upper, lower, initial, or mixed case 
+      // case - Modify the words to be upper, lower, initial, or mixed case
 
       thisPassword.setWordCase ( optarg );
 
@@ -94,7 +94,7 @@ int main ( int argc, char **argv ) {
 
     else if ( flag == 'h' ) {
 
-      // help - Display a message with usage information 
+      // help - Display a message with usage information
 
       showHelp();
 
@@ -170,7 +170,7 @@ int main ( int argc, char **argv ) {
 
     else if ( flag == 'v' ) {
 
-      // version - Display a message with version information 
+      // version - Display a message with version information
 
       showVersion();
 
@@ -229,7 +229,7 @@ int main ( int argc, char **argv ) {
 
 void showVersion() {
 
-  // version - Display a message with version information 
+  // version - Display a message with version information
 
   std::cout << "chbspasswd v0.2" << std::endl;
 
@@ -237,7 +237,7 @@ void showVersion() {
 
 void showHelp() {
 
-  // help - Display a message with usage information 
+  // help - Display a message with usage information
 
   std::cout << std::endl;
   std::cout << "Usage: chbspasswd [ -w numberOfWords ]" << std::endl;
